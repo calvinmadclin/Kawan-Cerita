@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kawan Cerita</title>
+    <style>
+        /* =========================================
+           1. RESET & BASE STYLES
+        ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { line-height: 1.6; color: #333; background-color: #f4f4f4; overflow-x: hidden; scroll-behavior: smooth; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* =========================================
+           2. HEADER & NAVIGASI (DYNAMIC COLOR)
+        ========================================= */
+        header { 
+            background: transparent; 
+            color: #fff; 
+            padding: 1.5rem 0; 
+            position: fixed; 
+            top: 0; 
+            width: 100%;
+            z-index: 1000; 
+            transition: all 0.5s ease; 
+        }
+        
+        .container { max-width: 1100px; margin: auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #ecf0f1; transition: color 0.5s ease; }
+        .nav-links { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+        .nav-links a { color: #fff; transition: color 0.5s ease; font-weight: 500;}
+        .nav-links a:hover { color: #f1c40f; }
+
+        /* --- KELAS WARNA HEADER DINAMIS --- */
+        header.theme-hero { background: rgba(0,0,0, 0.3); padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1);}
+        header.theme-orange { background: #fff; padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        header.theme-orange .logo, header.theme-orange .nav-links a { color: #000080; }
+        header.theme-light { background: #ffffff; padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        header.theme-light .logo { color: #2c3e50; }
+        header.theme-light .nav-links a { color: #333; }
+        header.theme-light .nav-links a:hover { color: #3498db; }
+        header.theme-dark { background: #203C7A; padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.1);}
+        header.theme-dark .logo, header.theme-dark .nav-links a { color: #f1c40f; }
+
+        /* =========================================
+           3. HERO SECTION (DENGAN TEXTURE TEKS)
+        ========================================= */
+        .hero { 
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('star.jpeg'); 
+            background-size: cover; background-position: center; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #fff; padding: 0 20px; 
+        }
+        
+        .hero h1.textured-title { 
+            font-size: clamp(3.5rem, 8vw, 6rem); 
+            font-family: 'Georgia', serif; 
+            margin-bottom: 5px; 
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png'), linear-gradient(45deg, #fdfbf7, #e5b982, #f1c40f);
+            background-size: auto, cover;
+            color: transparent; 
+            -webkit-background-clip: text; 
+            background-clip: text; 
+            filter: drop-shadow(3px 5px 6px rgba(0,0,0,0.6));
+        }
+
+        .hero h2.subtitle { font-size: clamp(1.5rem, 3vw, 2.5rem); margin-bottom: 15px; text-shadow: 2px 2px 8px rgba(0,0,0,0.8); }
+        .hero p { font-size: 1.1rem; margin-bottom: 20px; max-width: 600px; text-shadow: 1px 1px 5px rgba(0,0,0,0.8); }
+        .btn { display: inline-block; background: #3498db; color: #fff; padding: 10px 30px; border-radius: 5px; transition: 0.3s; text-shadow: none; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .btn:hover { background: #2980b9; transform: translateY(-2px); }
+
+        /* =========================================
+           4. TEAM SECTION
+        ========================================= */
+        .team-section { padding: 100px 20px 60px; background-color: #89cff0; text-align: center; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; } 
+        .team-title { font-size: 2.5rem; margin-bottom: 40px; color: #333; }
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; max-width: 1100px; margin: 0 auto; width: 100%; }
+        .team-member { background: #fff; padding: 20px 10px; border-radius: 10px; text-align: center; transition: transform 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .team-member:hover { transform: translateY(-5px); }
+        .team-member img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 3px solid #3498db; }
+        .team-member h4 { color: #2c3e50; margin-bottom: 5px; font-size: 1.1rem; }
+        .team-member p { font-size: 0.9rem; color: #777; }
+
+        /* =========================================
+           5. ABOUT SECTION
+        ========================================= */
+        .about-section { padding: 100px 20px; background-color: #f9f9f9; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .about-content { display: flex; align-items: center; gap: 40px; max-width: 1100px; margin: auto; flex-wrap: wrap; }
+        .about-text { flex: 1; min-width: 300px; }
+        .about-text h2 { font-size: 2.5rem; color: #2c3e50; margin-bottom: 20px; }
+        .about-text p { margin-bottom: 15px; color: #555; line-height: 1.8; }
+        .about-image { flex: 1; min-width: 300px; }
+        .about-image img { width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+        /* =========================================
+           6. FEATURES SECTION
+        ========================================= */
+        .features { padding: 100px 20px; background: #fff; }
+        .features-title { text-align: center; font-size: 2.5rem; margin-bottom: 40px; color:#2c3e50; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1100px; margin: auto; }
+        .card { background: #f9f9f9; padding: 30px 20px; text-align: center; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .card h3 { margin-bottom: 10px; color: #2c3e50; }
+
+        /* =========================================
+           7. LITERATUR SECTION
+        ========================================= */
+        .jurnal-lit-section { padding: 100px 20px 60px; background-color: #f4f4f4; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+        .section-title { text-align: center; font-size: 2.5rem; color: #2c3e50; margin-bottom: 10px; }
+        .section-subtitle { text-align: center; font-size: 1.1rem; color: #666; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .jurnal-lit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto; width: 100%; }
+        .jurnal-card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 25px; transition: transform 0.3s ease; border-left: 5px solid #3498db; display: flex; flex-direction: column; }
+        .jurnal-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .jurnal-tag { display: inline-block; background-color: #e8f6ff; color: #2980b9; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-bottom: 15px; align-self: flex-start; }
+        .jurnal-card h3 { margin-bottom: 10px; color: #2c3e50; font-size: 1.2rem; line-height: 1.4; }
+        .jurnal-author { color: #7f8c8d; font-size: 0.9rem; margin-bottom: 15px; font-style: italic; }
+        .jurnal-desc { color: #555; font-size: 0.95rem; margin-bottom: 25px; flex-grow: 1; }
+        .btn-baca { align-self: flex-start; display: inline-block; padding: 8px 20px; background-color: #fff; border: 2px solid #3498db; color: #3498db; border-radius: 5px; font-weight: bold; transition: 0.3s; text-decoration: none; }
+        .btn-baca:hover { background-color: #3498db; color: #fff; }
+
+        /* =========================================
+           8. PAPAN JURNAL (FANTASY BOOK STYLE)
+        ========================================= */
+        .journal-section { 
+        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('star 2.jpeg'); 
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; 
+            padding: 100px 20px 80px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh; 
+        }
+        
+        .journal-title { 
+            color: #ffffff; /* Ubah jadi putih terang */
+            margin-bottom: 30px; 
+            text-align: center; 
+            font-size: 2.5rem; 
+            /* Tambahkan efek bayangan hitam tebal dan glow putih tipis */
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+        .journal-title span { 
+            color: #f1c40f; /* Warna kuning emas */
+            /* Tambahkan glow kuning biar nyala di background gelap */
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9), 0 0 15px rgba(241, 196, 15, 0.5); 
+        }
+
+        .journal-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; width: 100%; max-width: 600px; }
+        .tab-btn { padding: 12px 25px; background: #34495e; border: none; border-radius: 8px 8px 0 0; font-weight: bold; color: #fff; cursor: pointer; transition: 0.3s; font-size: 1rem; flex: 1; }
+        .tab-btn.active { background: #fdfbf7; color: #2c3e50; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); }
+
+        /* Container 1 Lembar Buku */
+        .book-container {
+            width: 100%;
+            max-width: 600px;
+            height: 650px; 
+            background-color: #fdfbf7;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 0 30px rgba(0,0,0,0.05);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; 
+        }
+
+        /* Besi Spiral & Lubang di Kiri */
+        .book-spine {
+            position: absolute;
+            top: 0; bottom: 0; left: 0;
+            width: 45px;
+            background-image: 
+                linear-gradient(to bottom, transparent 13px, #ffffff 13px, #ffffff 14.5px, transparent 14.5px),
+                linear-gradient(to bottom, transparent 14.5px, #7f8c8d 14.5px, #7f8c8d 17px, transparent 17px),
+                radial-gradient(circle at 26px 16px, #1a252f 7px, transparent 8px);
+            background-size: 26px 32px, 26px 32px, 100% 32px;
+            background-repeat: repeat-y;
+            z-index: 10;
+            border-right: 1px solid rgba(0,0,0,0.1);
+            background-color: rgba(0,0,0,0.04);
+        }
+
+        /* Garis Merah Margin */
+        .book-container::before {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0; left: 60px; 
+            width: 2px;
+            background: rgba(231, 76, 60, 0.4);
+            z-index: 1;
+        }
+
+        .book-view {
+            flex: 1;
+            padding: 32px 30px 40px 80px; 
+            display: flex;
+            flex-direction: column;
+            background-image: repeating-linear-gradient(transparent, transparent 31px, #e8e0d5 31px, #e8e0d5 32px);
+            background-size: 100% 32px;
+            background-position: 0 24px; 
+            position: relative;
+            z-index: 2;
+            overflow: hidden; 
+        }
+
+        .book-view h3 { 
+            font-family: 'Courier New', Courier, monospace; 
+            color: #2c3e50; 
+            font-size: 1.5rem; 
+            line-height: 32px; 
+            margin: 0 0 32px 0; 
+        }
+
+        /* Area Ketik */
+        .book-view textarea {
+            flex-grow: 1; width: 100%; border: none; resize: none; background: transparent; outline: none;
+            font-family: 'Courier New', Courier, monospace; font-size: 16px; 
+            line-height: 32px; 
+            color: #2c3e50;
+            overflow-y: hidden; 
+            padding: 0; margin: 0;
+        }
+        
+        .btn-save-note {
+            margin-top: 32px; padding: 12px 20px; background: #2c3e50; color: #fff; border: none; border-radius: 5px;
+            cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.3s; font-size: 0.95rem; align-self: flex-end;
+        }
+        .btn-save-note:hover { background: #34495e; transform: translateY(-2px); }
+
+        /* Notifikasi Auto-Turn Page */
+        .toast {
+            position: absolute;
+            top: 20px; left: 50%; transform: translateX(-50%);
+            background: #f1c40f; color: #2c3e50;
+            padding: 8px 20px; border-radius: 20px;
+            font-size: 0.9rem; font-weight: bold;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(10px); }
+
+        /* Area Scroll Riwayat */
+        .read-area {
+            flex-grow: 1;
+            overflow-y: auto; 
+            overflow-x: hidden; /* MEMATIKAN SCROLL SAMPING AGAR TIDAK LEBAR */
+            padding-right: 10px;
+            display: flex;
+            flex-direction: column;
+            padding-top: 0;
+        }
+
+        .read-area::-webkit-scrollbar { width: 6px; }
+        .read-area::-webkit-scrollbar-thumb { background: #bdc3c7; border-radius: 10px; }
+
+        /* Desain Item Riwayat Presisi */
+        .history-note {
+            border-bottom: 2px dashed rgba(0,0,0,0.15);
+            padding-bottom: 14px; 
+            margin-bottom: 16px; 
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .history-note:last-child { border-bottom: none; margin-bottom: 0; }
+
+        .note-date { 
+            font-size: 0.9rem; 
+            color: #7f8c8d; 
+            font-style: italic; 
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 32px; 
+            margin: 0; 
+        }
+        .note-content { 
+            font-family: 'Courier New', Courier, monospace; 
+            font-size: 16px; 
+            line-height: 32px; 
+            color: #2c3e50; 
+            white-space: pre-wrap; 
+            word-wrap: break-word; /* PAKSA TEKS PANJANG TURUN KE BAWAH */
+            word-break: break-word; /* PAKSA TEKS PANJANG TURUN KE BAWAH */
+            margin: 0; 
+            width: 100%;
+        }
+        
+        .btn-delete-note { 
+            background: none; border: none; color: #e74c3c; cursor: pointer; text-decoration: underline; 
+            font-size: 0.85rem; align-self: flex-start; font-weight: bold; font-family: sans-serif; 
+            line-height: 32px; margin: 0; padding: 0;
+        }
+
+        .empty-state { text-align: center; color: #95a5a6; font-style: italic; margin-top: 32px; font-family: 'Courier New', Courier, monospace; font-size: 1rem; line-height: 32px;}
+
+        /* =========================================
+           9. MUSIC PLAYER (BGM CONTROLS)
+        ========================================= */
+        .bgm-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px; /* Posisi di kiri bawah */
+            outline: none; border: none; 
+            height: 50px; width: 50px; 
+            background: #2c3e50; color: #fff; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 1.5rem; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+            transition: all 0.3s ease; 
+            z-index: 9998;
+        }
+        .bgm-btn:hover { background: #f1c40f; color: #2c3e50; transform: scale(1.1); }
+        .bgm-btn.playing { animation: pulse 2s infinite; } /* Efek denyut saat lagu nyala */
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(241, 196, 15, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(241, 196, 15, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(241, 196, 15, 0); }
+        }
+
+        /* =========================================
+           10. CHATBOT WIDGET STYLES
+        ========================================= */
+        .chatbot-toggler { position: fixed; bottom: 30px; right: 35px; outline: none; border: none; height: 60px; width: 60px; background: #3498db; color: #fff; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: all 0.2s ease; z-index: 9999; }
+        .chatbot-toggler:hover { transform: scale(1.1); background: #2980b9; }
+        
+        .chatbot { position: fixed; right: 35px; bottom: 100px; width: 380px; background: #fff; border-radius: 15px; overflow: hidden; opacity: 0; pointer-events: none; transform: scale(0.5); transform-origin: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: opacity 0.2s, transform 0.2s; z-index: 9999; display: flex; flex-direction: column; }
+        body.show-chatbot .chatbot { opacity: 1; pointer-events: auto; transform: scale(1); }
+        
+        .chatbot header { padding: 16px 20px; position: relative; text-align: left; color: #fff; background: #2c3e50; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px; cursor: grab; user-select: none; }
+        .chatbot header:active { cursor: grabbing; }
+        
+        .chatbot header .bot-avatar { width: 35px; height: 35px; background: #f1c40f; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+        .chatbot header h2 { font-size: 1.1rem; letter-spacing: 0.5px; }
+        .chatbot header p { font-size: 0.8rem; opacity: 0.8; margin-top: -3px; }
+        .chatbot header .close-btn { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 1.2rem; transition: 0.2s; }
+        .chatbot header .close-btn:hover { color: #f1c40f; }
+        
+        .chatbot .chatbox { overflow-y: auto; height: 380px; padding: 20px 20px 70px; display: flex; flex-direction: column; gap: 15px; background: #f9f9f9; scroll-behavior: smooth; }
+        .chatbot .chat { display: flex; list-style: none; align-items: flex-end; }
+        .chatbot .chat p { word-wrap: break-word; padding: 12px 16px; font-size: 0.95rem; line-height: 1.5; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        
+        .chatbot .outgoing { justify-content: flex-end; margin-left: 20px; }
+        .chatbot .outgoing p { background: #3498db; color: #fff; border-radius: 18px 18px 0 18px; }
+        .chatbot .incoming { justify-content: flex-start; margin-right: 20px; }
+        .chatbot .incoming p { background: #fff; color: #333; border-radius: 18px 18px 18px 0; border: 1px solid #eaeaea; }
+        
+        .chatbot .chat p a { color: #fff; font-weight: bold; text-decoration: none; background: #2980b9; padding: 8px 12px; border-radius: 8px; display: inline-block; margin-top: 10px; transition: 0.3s; pointer-events: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #2471a3; }
+        .chatbot .chat p a:hover { background: #1a5276; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+
+        .quick-replies { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .quick-btn { background: #fff; border: 1px solid #3498db; color: #3498db; padding: 8px 15px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; transition: 0.2s; }
+        .quick-btn:hover { background: #3498db; color: #fff; }
+
+        .chatbot .chat-input { display: flex; gap: 10px; position: absolute; bottom: 0; width: 100%; background: #fff; padding: 15px 20px; border-top: 1px solid #eaeaea; align-items: center; }
+        .chat-input textarea { height: 45px; width: 100%; border: none; outline: none; resize: none; font-size: 0.95rem; padding: 12px 15px; background: #f4f4f4; border-radius: 20px; }
+        .chat-input span { color: #fff; background: #3498db; height: 40px; width: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer; font-size: 1.2rem; transition: 0.2s; flex-shrink: 0;}
+        .chat-input span:hover { background: #2980b9; transform: scale(1.05); }
+
+        .chatbox::-webkit-scrollbar { width: 6px; }
+        .chatbox::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+
+        /* =========================================
+           11. FOOTER & MEDIA QUERIES 
+        ========================================= */
+        footer { background: #1a252f; color: #fff; text-align: center; padding: 20px; }
+
+        @media (max-width: 850px) {
+            .nav-links { margin-top: 15px; width: 100%; justify-content: center; }
+            .team-section, .about-section, .jurnal-lit-section, .journal-section { min-height: auto; padding: 100px 20px 60px; }
+        }
+
+        @media (max-width: 600px) {
+            .container { flex-direction: column; text-align: center; }
+            .jurnal-lit-grid { grid-template-columns: 1fr; } 
+            
+            .book-view { margin: 20px 15px 20px 35px; padding: 20px; }
+            .book-spine { width: 30px; }
+            
+            .chatbot { right: 0 !important; top: 0 !important; left: 0 !important; bottom: 0 !important; width: 100%; height: 100vh; border-radius: 0; transform: translateY(100%); transition: transform 0.3s; z-index: 10000; }
+            body.show-chatbot .chatbot { transform: translateY(0) scale(1); }
+            .chatbot .chatbox { height: calc(100vh - 140px); } 
+            .chatbot-toggler { bottom: 20px; right: 20px; }
+            .chatbot header { cursor: default; } 
+
+            .bgm-btn { bottom: 20px; left: 20px; } /* Sesuaikan posisi tombol lagu di HP */
+        }
+    </style>
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="container">
+            <div class="logo">Kawan Cerita</div>
+            <ul class="nav-links">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#team">Tim Kami</a></li>
+                <li><a href="#about">Tentang</a></li>
+                <li><a href="#jurnal-lit">Literatur</a></li>
+                <li><a href="#join">Papan Jurnal</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section id="home" class="hero section-scroll">
+        <h1 class="textured-title">Kawan Cerita</h1>
+        <h2 class="subtitle">Kami Ada Untuk Mendengarkan</h2>
+        <p>Di sini tempat kamu aman untuk menceritakan semuanya, jangan takut untuk berbagi beban yang kamu pikul saat ini dengan kami. Kami siap mendengarkan ceritamu</p>
+        <a href="#join" class="btn">Tulis Jurnalmu</a>
+    </section>
+
+    <section id="team" class="team-section section-scroll">
+        <h2 class="team-title">Tim Penggerak</h2>
+        <div class="team-grid">
+            <div class="team-member"><img src="Calvin.jpeg" alt="Foto Ketua"><h4>Calvin Madclin</h4><p>NIM 1801624047</p></div>
+            <div class="team-member"><img src="Damar.jpeg" alt="Foto Sekretaris"><h4>Mahara Damar</h4><p>NIM 1801624271</p></div>
+            <div class="team-member"><img src="Afrin.jpeg" alt="Foto Humas"><h4>Afrin Khalisa</h4><p>NIM 1801624002</p></div>
+            <div class="team-member"><img src="Raisha.jpeg" alt="Foto Bendahara"><h4>Raisha Amalia</h4><p>NIM 1801624013</p></div>
+            <div class="team-member"><img src="Syasya.jpeg" alt="Foto Kreatif"><h4>Syafira Putri</h4><p>NIM 1801624039</p></div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section section-scroll">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Siapa Kami?</h2>
+                <p><strong>Kawan Cerita</strong> lahir dari sebuah keresahan kecil yang berkembang menjadi gerakan besar. Berdiri sejak tahun 2026, kami berdedikasi untuk menciptakan ruang aman bagi siapa saja yang ingin menceritakan segala permasalahan mereka.</p>
+                <p>Visi: Mewujudkan masyarakat yang inklusif dan saling mendukung. Kami percaya bahwa dengan bercerita bisa membuat perasaan jadi lebih baik.</p>
+                <a href="https://t.me/pendengarceritakamu_bot" target="_blank" class="btn">Hubungi Kami</a>
+            </div>
+            <div class="about-image"><img src="Individual Psychotherapy.jpeg" alt="Foto Kegiatan Komunitas"></div>
+        </div>
+    </section>
+
+    <section id="features" class="features section-scroll">
+        <h2 class="features-title">Apa yang Kami Lakukan?</h2>
+        <div class="features-grid">
+            <div class="card"><h3>📝 Peer Counseling</h3><p>Wadah untuk bertukar pikiran dan berbagi perspektif tentang masalah yang dihadapi.</p></div>
+            <div class="card"><h3>🔗 Menghubungkan</h3><p>Menghubungkan ke tenaga profesional dan fasilitas konseling terdekat.</p></div>
+            <div class="card"><h3>🎓 Edukasi & Webinar</h3><p>Akses materi belajar eksklusif dan ikuti webinar dari para ahli.</p></div>
+        </div>
+    </section>
+
+    <section id="jurnal-lit" class="jurnal-lit-section section-scroll">
+        <div class="container" style="display: block; width: 100%;"> 
+            <h2 class="section-title">Pusat Literatur & Jurnal Pendukung</h2>
+            <p class="section-subtitle">Kumpulan penelitian dan jurnal ilmiah yang mendasari program kerja serta efektivitas pendekatan kami dalam mendampingi remaja.</p>
+            
+            <div class="jurnal-lit-grid">
+                <div class="jurnal-card">
+                    <span class="jurnal-tag">Terapi Katarsis</span>
+                    <h3>Terapi Menulis Ekspresif Sebagai Media Katarsis Dalam Mengurangi Kecemasan</h3>
+                    <p class="jurnal-author">Journal of Islamic Education Guidance and Counseling (2022)</p>
+                    <p class="jurnal-desc">Penelitian ini membuktikan bahwa memberi ruang bagi remaja untuk menuliskan pengalaman pahit dan emosi terpendam sangat efektif menurunkan tingkat kecemasan.</p>
+                    <a href="https://jurnal.idaqu.ac.id/index.php/jiegc/article/download/611/396" target="_blank" class="btn-baca">Baca Jurnal</a>
+                </div>
+                <div class="jurnal-card">
+                    <span class="jurnal-tag">Teknologi Konseling</span>
+                    <h3>Efektivitas Chatbot AI Dibandingkan Layanan Konselor Manusia</h3>
+                    <p class="jurnal-author">Jurnal Inovasi Teknologi dan Edukasi Teknik - Unila (2023)</p>
+                    <p class="jurnal-desc">Membahas bagaimana anonimitas yang diberikan oleh chatbot sangat membantu remaja mengatasi stigma saat harus melaporkan masalah sensitif seperti bullying.</p>
+                    <a href="https://journal.eng.unila.ac.id/index.php/jitet/article/view/8587" target="_blank" class="btn-baca">Baca Jurnal</a>
+                </div>
+                <div class="jurnal-card">
+                    <span class="jurnal-tag">Anti-Bullying</span>
+                    <h3>Peran Teman Sebaya dalam Upaya Pencegahan Perilaku Bullying</h3>
+                    <p class="jurnal-author">Al-Zayn: Jurnal Ilmu Sosial & Hukum (2025)</p>
+                    <p class="jurnal-desc">Menegaskan pentingnya kolaborasi dan program anti-bullying berbasis partisipasi <i>peer support</i> untuk menciptakan lingkungan yang aman dan suportif.</p>
+                    <a href="https://ejournal.yayasanpendidikandzurriyatulquran.id/index.php/AlZayn/article/view/1842" target="_blank" class="btn-baca">Baca Jurnal</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="join" class="journal-section section-scroll">
+        <h2 class="journal-title">Buku <span>Jurnal Keresahan</span></h2>
+        
+        <div class="journal-tabs">
+            <button class="tab-btn active" id="tab-write" onclick="switchTab('write')">Tulis Jurnal</button>
+            <button class="tab-btn" id="tab-read" onclick="switchTab('read')">Riwayat Jurnal</button>
+        </div>
+
+        <div class="book-container">
+            <div class="book-spine"></div>
+            
+            <div class="book-view" id="write-view">
+                <div id="toast" class="toast"></div> 
+                <h3>Lembaran Kosong</h3>
+                <textarea id="entry" placeholder="Tuliskan apapun yang membebani pikiranmu di sini..."></textarea>
+                <button class="btn-save-note" onclick="saveNote()">Simpan Cerita Ini</button>
+            </div>
+
+            <div class="book-view" id="read-view" style="display: none;">
+                <h3>Arsip Cerita</h3>
+                <div class="read-area" id="read-area"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Kawan Cerita. Dibuat dengan semangat.</p>
+    </footer>
+
+    <!-- WIDGET MUSIK LATAR (BGM) -->
+    <!-- PERHATIAN: Ubah 'bgm.mp3' dengan nama file lagu di folder lokalmu -->
+    <audio id="bgm-audio" loop>
+        <source src="Fond Memories Instrumental.mp3" type="audio/mpeg">
+    </audio>
+    <button class="bgm-btn" id="bgm-btn" onclick="toggleBGM()">🔇</button>
+
+    <button class="chatbot-toggler">💬</button>
+    <div class="chatbot" id="chatbot-window">
+        <header id="chatbot-header">
+            <div class="bot-avatar">🤝</div>
+            <div>
+                <h2>Kawan Cerita</h2>
+                <p>Selalu siap mendengarkan</p>
+            </div>
+            <span class="close-btn">✖</span>
+        </header>
+        <ul class="chatbox" id="chatbox">
+            <li class="chat incoming">
+                <p>
+                    Halo! 👋 Aku pendamping virtualmu di Kawan Cerita.<br><br>
+                    Ruang ini 100% aman. Apakah ada yang mengganggu pikiranmu, atau kamu butuh informasi untuk lapor kejadian?
+                    <span class="quick-replies" id="initial-options">
+                        <button class="quick-btn" onclick="quickReply('Aku mau curhat')">Aku mau curhat</button>
+                        <button class="quick-btn" onclick="quickReply('Ada kasus tawuran/bullying')">Lapor Kasus Tawuran/Bullying</button>
+                        <button class="quick-btn" onclick="quickReply('Hubungi Admin')">Hubungi Admin / Telegram</button>
+                    </span>
+                </p>
+            </li>
+        </ul>
+        <div class="chat-input">
+            <textarea id="chat-textarea" placeholder="Ketik pesan..." required></textarea>
+            <span id="send-btn">➤</span>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 0. LOGIKA MUSIK LATAR (BGM CONTROLS)
+        // ==========================================
+        const bgmAudio = document.getElementById('bgm-audio');
+        const bgmBtn = document.getElementById('bgm-btn');
+        let isPlaying = false;
+
+        function toggleBGM() {
+            if (isPlaying) {
+                bgmAudio.pause();
+                bgmBtn.innerText = '🔇';
+                bgmBtn.classList.remove('playing');
+                isPlaying = false;
+            } else {
+                // Menurunkan volume sedikit agar tidak mengganggu (Opsional)
+                bgmAudio.volume = 0.5; 
+                bgmAudio.play();
+                bgmBtn.innerText = '🎵';
+                bgmBtn.classList.add('playing');
+                isPlaying = true;
+            }
+        }
+
+        // ==========================================
+        // 1. LOGIKA HEADER DINAMIS (SCROLL SPY)
+        // ==========================================
+        const header = document.getElementById('main-header');
+        const sections = document.querySelectorAll('.section-scroll');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            header.className = '';
+
+            if (current === 'home') {
+                header.classList.add('theme-hero'); 
+            } else if (current === 'team') {
+                header.classList.add('theme-orange'); 
+            } else if (current === 'about' || current === 'features' || current === 'jurnal-lit') {
+                header.classList.add('theme-light'); 
+            } else if (current === 'join') {
+                header.classList.add('theme-dark'); 
+            }
+        });
+
+        // ==========================================
+        // 2. LOGIKA BUKU JURNAL
+        // ==========================================
+        let savedNotes = [];
+
+        window.onload = () => { loadNotes(); };
+
+        function switchTab(tab) {
+            const writeView = document.getElementById('write-view');
+            const readView = document.getElementById('read-view');
+            const tabWrite = document.getElementById('tab-write');
+            const tabRead = document.getElementById('tab-read');
+
+            if (tab === 'write') {
+                writeView.style.display = 'flex';
+                readView.style.display = 'none';
+                tabWrite.classList.add('active');
+                tabRead.classList.remove('active');
+            } else {
+                writeView.style.display = 'none';
+                readView.style.display = 'flex';
+                tabWrite.classList.remove('active');
+                tabRead.classList.add('active');
+            }
+        }
+
+        const entryArea = document.getElementById('entry');
+        entryArea.addEventListener('input', function() {
+            if (this.scrollHeight > this.clientHeight + 2) {
+                let fullText = this.value;
+                let lastSpace = fullText.lastIndexOf(' ');
+                if (lastSpace === -1) lastSpace = fullText.length;
+                let textToSave = fullText.substring(0, lastSpace);
+                let textToCarry = fullText.substring(lastSpace + 1);
+
+                this.value = textToSave;
+                saveNote(true);
+                this.value = textToCarry;
+            }
+        });
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3500);
+        }
+
+        function loadNotes() {
+            savedNotes = JSON.parse(localStorage.getItem('kawan_cerita_notes')) || [];
+            renderNotesList();
+        }
+
+        function saveNote(isAutoSave = false) {
+            const textarea = document.getElementById('entry');
+            const text = textarea.value.trim();
+            
+            if (text === "") { 
+                if(!isAutoSave) alert("Kertas masih kosong, tulis sesuatu dulu ya!"); 
+                return; 
+            }
+
+            const dateStr = new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            const newNote = { id: Date.now(), text: text, date: dateStr };
+
+            savedNotes.push(newNote);
+            localStorage.setItem('kawan_cerita_notes', JSON.stringify(savedNotes));
+
+            renderNotesList();
+            
+            if (!isAutoSave) {
+                textarea.value = "";
+                switchTab('read'); 
+            } else {
+                showToast("Kertas penuh! Tulisan otomatis disegel. Silakan lanjut di lembaran baru.");
+            }
+        }
+
+        function renderNotesList() {
+            const readArea = document.getElementById('read-area');
+            readArea.innerHTML = ''; 
+
+            if (savedNotes.length === 0) { 
+                readArea.innerHTML = "<p class='empty-state'>Arsip masih kosong. Silakan tulis keresahanmu terlebih dahulu...</p>";
+                return; 
+            }
+
+            const reversedNotes = [...savedNotes].reverse();
+
+            reversedNotes.forEach((note) => {
+                const noteDiv = document.createElement('div');
+                noteDiv.className = 'history-note';
+
+                const dateDiv = document.createElement('div');
+                dateDiv.className = 'note-date';
+                dateDiv.innerText = note.date;
+
+                const textDiv = document.createElement('div');
+                textDiv.className = 'note-content';
+                textDiv.innerText = note.text;
+
+                const delBtn = document.createElement('button');
+                delBtn.className = 'btn-delete-note';
+                delBtn.innerText = '🗑️ Hapus Arsip Ini';
+                delBtn.onclick = () => deleteNote(note.id);
+
+                noteDiv.appendChild(dateDiv);
+                noteDiv.appendChild(textDiv);
+                noteDiv.appendChild(delBtn);
+
+                readArea.appendChild(noteDiv);
+            });
+        }
+
+        function deleteNote(id) {
+            if(confirm("Yakin ingin menghapus arsip jurnal ini selamanya?")) {
+                savedNotes = savedNotes.filter(n => n.id !== id);
+                localStorage.setItem('kawan_cerita_notes', JSON.stringify(savedNotes));
+                renderNotesList();
+            }
+        }
+
+        // ==========================================
+        // 3. LOGIKA CHATBOT INTERAKTIF
+        // ==========================================
+        const chatbotToggler = document.querySelector(".chatbot-toggler");
+        const closeBtn = document.querySelector(".close-btn");
+        const chatbox = document.querySelector(".chatbox");
+        const chatInput = document.querySelector("#chat-textarea");
+        const sendChatBtn = document.querySelector("#send-btn");
+
+        const createChatLi = (message, className) => {
+            const chatLi = document.createElement("li");
+            chatLi.classList.add("chat", className);
+            
+            if(className === "outgoing") {
+                chatLi.innerHTML = `<p></p>`;
+                chatLi.querySelector("p").textContent = message; 
+            } else {
+                chatLi.innerHTML = `<p>${message}</p>`;
+            }
+            return chatLi;
+        }
+
+        const quickReply = (text) => {
+            const optionsDiv = document.getElementById('initial-options');
+            if(optionsDiv) optionsDiv.style.display = 'none';
+            chatInput.value = text;
+            handleChat();
+        }
+
+        const generateResponse = (userMessage) => {
+            const msg = userMessage.toLowerCase();
+            let response = "Terima kasih sudah berbagi. Kami menghargai setiap cerita yang masuk. Apakah ada hal spesifik yang ingin kamu diskusikan dengan admin?";
+
+            if (msg.includes("halo") || msg.includes("hai") || msg.includes("curhat")) {
+                response = "Tarik napas perlahan... Kamu aman di sini. Silakan ceritakan apa yang mengganjal di pikiranmu, aku siap mendengarkan tanpa menghakimi.";
+            } else if (msg.includes("tawuran") || msg.includes("bullying") || msg.includes("dibully") || msg.includes("kasar") || msg.includes("lapor")) {
+                response = `Kami sangat menolak segala bentuk kekerasan. Ini bukan salahmu dan kamu tidak sendirian menghadapi ini.<br><br>Untuk tindakan pencegahan atau pelaporan yang lebih aman, sangat disarankan untuk berbicara langsung dengan tim pendamping kami.<br><br>
+                <a href="https://t.me/pendengarceritakamu_bot" target="_blank">💬 Lapor via Telegram Admin</a>`;
+            } else if (msg.includes("admin") || msg.includes("telegram") || msg.includes("kontak") || msg.includes("bantuan")) {
+                response = `Tentu, kamu bisa mengobrol secara privat (*confidential*) dengan konselor Kawan Cerita melalui Telegram bot kami di bawah ini:<br><br>
+                <a href="https://t.me/pendengarceritakamu_bot" target="_blank">💬 Hubungi via Telegram</a><br><br>Pesanmu akan direspons secepat mungkin oleh tim kami.`;
+            } else if (msg.includes("sedih") || msg.includes("takut") || msg.includes("depresi") || msg.includes("capek")) {
+                response = `Wajar banget untuk merasa lelah dan takut dengan keadaan sekitar. Tidak apa-apa mengambil waktu sejenak untuk dirimu sendiri. Jika butuh ruang yang lebih aman untuk bercerita panjang, kamu bisa menghubungi kami di sini:<br><br>
+                <a href="https://t.me/pendengarceritakamu_bot" target="_blank">💬 Cerita ke Admin</a>`;
+            }
+
+            setTimeout(() => {
+                chatbox.appendChild(createChatLi(response, "incoming"));
+                chatbox.scrollTo(0, chatbox.scrollHeight);
+            }, 800); 
+        }
+
+        const handleChat = () => {
+            const userMessage = chatInput.value.trim();
+            if(!userMessage) return;
+
+            chatInput.value = "";
+            chatbox.appendChild(createChatLi(userMessage, "outgoing"));
+            chatbox.scrollTo(0, chatbox.scrollHeight);
+            
+            generateResponse(userMessage);
+        }
+
+        sendChatBtn.addEventListener("click", handleChat);
+        chatInput.addEventListener("keydown", (e) => {
+            if(e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleChat();
+            }
+        });
+
+        chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
+        closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
+
+        // ==========================================
+        // 4. LOGIKA DRAG & DROP UNTUK CHATBOT
+        // ==========================================
+        const chatbotWindow = document.getElementById("chatbot-window");
+        const chatbotHeader = document.getElementById("chatbot-header");
+
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        chatbotHeader.addEventListener("mousedown", (e) => {
+            if (e.target.classList.contains("close-btn")) return;
+            if (window.innerWidth <= 600) return;
+
+            isDragging = true;
+            
+            const rect = chatbotWindow.getBoundingClientRect();
+            
+            chatbotWindow.style.left = rect.left + "px";
+            chatbotWindow.style.top = rect.top + "px";
+            chatbotWindow.style.right = "auto";
+            chatbotWindow.style.bottom = "auto";
+            chatbotWindow.style.margin = "0";
+
+            offsetX = e.clientX - rect.left;
+            offsetY = e.clientY - rect.top;
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            if (!isDragging) return;
+
+            let newX = e.clientX - offsetX;
+            let newY = e.clientY - offsetY;
+
+            const maxX = window.innerWidth - chatbotWindow.offsetWidth;
+            const maxY = window.innerHeight - chatbotWindow.offsetHeight;
+
+            newX = Math.max(0, Math.min(newX, maxX));
+            newY = Math.max(0, Math.min(newY, maxY));
+
+            chatbotWindow.style.left = `${newX}px`;
+            chatbotWindow.style.top = `${newY}px`;
+        });
+
+        document.addEventListener("mouseup", () => {
+            isDragging = false;
+        });
+
+    </script>
+</body>
+</html>
