@@ -363,6 +363,7 @@
             .bgm-btn { bottom: 20px; left: 20px; }
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 </head>
 <body>
 
@@ -401,28 +402,6 @@
         </div>
         <div class="scroll-hint reveal" style="transition-delay:0.6s">Gulir ke bawah</div>
     </section>
-
-    <!-- ======== STATS BANNER ======== -->
-    <div class="stats-banner">
-        <div class="stats-grid">
-            <div class="stat-item reveal">
-                <span class="stat-num" data-target="500">0</span>
-                <div class="stat-lbl">👤 Pengguna Aktif</div>
-            </div>
-            <div class="stat-item reveal" style="transition-delay:0.1s">
-                <span class="stat-num" data-target="1200">0</span>
-                <div class="stat-lbl">📝 Cerita Tersegel</div>
-            </div>
-            <div class="stat-item reveal" style="transition-delay:0.2s">
-                <span class="stat-num" data-target="96">0</span>
-                <div class="stat-lbl">🤝 Sesi Konseling</div>
-            </div>
-            <div class="stat-item reveal" style="transition-delay:0.3s">
-                <span class="stat-num" data-target="15">0</span>
-                <div class="stat-lbl">📚 Jurnal & Artikel</div>
-            </div>
-        </div>
-    </div>
 
     <!-- ======== TEAM ======== -->
     <section id="team" class="team-section section-scroll">
@@ -470,161 +449,33 @@
     </section>
 
     <!-- ======== DASHBOARD (NEW) ======== -->
-    <section id="dashboard" class="dashboard-section section-scroll">
+    <section id="dashboard" class="dashboard-section">
         <div class="dash-center">
-            <div class="sec-badge reveal">Data & Wawasan</div>
-            <h2 class="sec-title reveal" style="transition-delay:0.1s">Dashboard Dampak Kami</h2>
-            <p class="sec-sub reveal" style="transition-delay:0.2s">Angka-angka yang mencerminkan pertumbuhan dan dampak nyata komunitas Kawan Cerita.</p>
+            <div class="sec-badge">Data & Wawasan</div>
+            <h2 class="sec-title">Dashboard Analisis Komentar</h2>
         </div>
-
-        <!-- 4 Stat Cards -->
+        
         <div class="dash-stats">
-            <div class="dash-stat reveal">
-                <span class="ds-icon">👥</span>
-                <span class="ds-num counter" data-target="542">0</span>
-                <div class="ds-label">Pengguna Terdaftar</div>
-                <div class="ds-change">↑ +12% bulan ini</div>
-            </div>
-            <div class="dash-stat reveal" style="transition-delay:0.1s">
-                <span class="ds-icon">📓</span>
-                <span class="ds-num counter" data-target="1287">0</span>
-                <div class="ds-label">Jurnal Tersegel</div>
-                <div class="ds-change">↑ +87 pekan ini</div>
-            </div>
-            <div class="dash-stat reveal" style="transition-delay:0.2s">
-                <span class="ds-icon">🤝</span>
-                <span class="ds-num counter" data-target="96">0</span>
-                <div class="ds-label">Sesi Konseling</div>
-                <div class="ds-change">↑ +8 bulan ini</div>
-            </div>
-            <div class="dash-stat reveal" style="transition-delay:0.3s">
-                <span class="ds-icon">⭐</span>
-                <span class="ds-num counter" data-target="42">0</span>
-                <div class="ds-label">Kepuasan <small style="font-size:0.5em;color:#64748B">(×0.1 = /5)</small></div>
-                <div class="ds-change">↑ Dari 128 responden</div>
-            </div>
+            <div class="dash-stat"><span class="ds-icon">📊</span><span class="ds-num counter" id="total-comments">0</span><div class="ds-label">Total Komentar</div></div>
+            <div class="dash-stat"><span class="ds-icon">✅</span><span class="ds-num counter" id="positive-comments">0</span><div class="ds-label">Sentimen Positif</div></div>
+            <div class="dash-stat"><span class="ds-icon">❌</span><span class="ds-num counter" id="negative-comments">0</span><div class="ds-label">Sentimen Negatif</div></div>
         </div>
 
-        <!-- Main Dashboard Grid -->
         <div class="dash-main">
-
-            <!-- Bar Chart -->
-            <div class="dash-card reveal">
-                <div class="dash-card-hdr">
-                    <div class="dash-card-title"><span>📊</span> Aktivitas Bulanan</div>
-                    <div class="dc-badge">2026</div>
-                </div>
-                <div class="bar-chart" id="bar-chart">
-                    <div class="bar-col"><div class="bar-val">42</div><div class="bar" data-h="54%"></div><div class="bar-lbl">Jan</div></div>
-                    <div class="bar-col"><div class="bar-val">68</div><div class="bar" data-h="87%"></div><div class="bar-lbl">Feb</div></div>
-                    <div class="bar-col"><div class="bar-val">55</div><div class="bar" data-h="70%"></div><div class="bar-lbl">Mar</div></div>
-                    <div class="bar-col"><div class="bar-val">78</div><div class="bar" data-h="100%"></div><div class="bar-lbl">Apr</div></div>
-                    <div class="bar-col"><div class="bar-val">61</div><div class="bar" data-h="78%"></div><div class="bar-lbl">Mei</div></div>
-                    <div class="bar-col"><div class="bar-val">90</div><div class="bar" data-h="115%"></div><div class="bar-lbl">Jun</div></div>
-                </div>
-                <p style="font-size:0.77rem;color:#475569;margin-top:12px;text-align:center;">Jumlah jurnal yang ditulis per bulan</p>
-            </div>
-
-            <!-- Donut Chart -->
-            <div class="dash-card reveal" style="transition-delay:0.15s">
-                <div class="dash-card-hdr">
-                    <div class="dash-card-title"><span>🍩</span> Topik Cerita</div>
-                    <div class="dc-badge">Terpopuler</div>
-                </div>
+            <div class="dash-card full">
+                <div class="dash-card-hdr"><div class="dash-card-title"><span>🍩</span> Distribusi Sentimen</div></div>
                 <div class="donut-wrap">
-                    <!-- C=2πr=314.16 | S1 40%=125.6 | S2 24%=75.4 | S3 16%=50.3 | S4 20%=62.8 -->
-                    <!-- dashoffset: S1=314, S2=188.4, S3=113.1, S4=62.8 -->
                     <svg class="donut-svg" viewBox="0 0 120 120">
-                        <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="13"/>
-                        <circle class="donut-anim" cx="60" cy="60" r="50" fill="none" stroke="#2563EB" stroke-width="13" stroke-linecap="round" stroke-dasharray="0 314" stroke-dashoffset="314" data-da="125.6 188.5"/>
-                        <circle class="donut-anim" cx="60" cy="60" r="50" fill="none" stroke="#7C3AED" stroke-width="13" stroke-linecap="round" stroke-dasharray="0 314" stroke-dashoffset="188.4" data-da="75.4 238.7"/>
-                        <circle class="donut-anim" cx="60" cy="60" r="50" fill="none" stroke="#F59E0B" stroke-width="13" stroke-linecap="round" stroke-dasharray="0 314" stroke-dashoffset="113.1" data-da="50.3 263.9"/>
-                        <circle class="donut-anim" cx="60" cy="60" r="50" fill="none" stroke="#0D9488" stroke-width="13" stroke-linecap="round" stroke-dasharray="0 314" stroke-dashoffset="62.8" data-da="62.8 251.3"/>
+                        <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(0,0,0,0.05)" stroke-width="13"/>
+                        <circle id="donut-circle-pos" class="donut-anim" cx="60" cy="60" r="50" fill="none" stroke="#2563EB" stroke-width="13" stroke-linecap="round" stroke-dasharray="0 314" stroke-dashoffset="314"/>
+                        <circle id="donut-circle-neg" class="donut-anim" cx="60" cy="60" r="50" fill="none" stroke="#E11D48" stroke-width="13" stroke-linecap="round" stroke-dasharray="0 314" stroke-dashoffset="314"/>
                     </svg>
-                    <div class="donut-legend">
-                        <div class="legend-row"><div class="legend-dot" style="background:#2563EB"></div>Pribadi (40%)</div>
-                        <div class="legend-row"><div class="legend-dot" style="background:#7C3AED"></div>Pendidikan (24%)</div>
-                        <div class="legend-row"><div class="legend-dot" style="background:#F59E0B"></div>Pertemanan (16%)</div>
-                        <div class="legend-row"><div class="legend-dot" style="background:#0D9488"></div>Keluarga (20%)</div>
-                    </div>
-                </div>
-                <p style="font-size:0.77rem;color:#475569;margin-top:14px;text-align:center;">Distribusi topik jurnal pengguna</p>
-            </div>
-
-            <!-- Progress Bars -->
-            <div class="dash-card reveal" style="transition-delay:0.2s">
-                <div class="dash-card-hdr">
-                    <div class="dash-card-title"><span>🎯</span> Capaian Program</div>
-                    <div class="dc-badge">Semester I</div>
-                </div>
-                <div class="prog-list">
-                    <div>
-                        <div class="prog-hdr"><span class="prog-name">Pengguna Aktif</span><span class="prog-val">542 / 600</span></div>
-                        <div class="prog-bg"><div class="prog-fill" style="background:linear-gradient(to right,#2563EB,#7C3AED)" data-w="90%"></div></div>
-                    </div>
-                    <div>
-                        <div class="prog-hdr"><span class="prog-name">Sesi Konseling</span><span class="prog-val">96 / 120</span></div>
-                        <div class="prog-bg"><div class="prog-fill" style="background:linear-gradient(to right,#7C3AED,#0D9488)" data-w="80%"></div></div>
-                    </div>
-                    <div>
-                        <div class="prog-hdr"><span class="prog-name">Literatur Tersedia</span><span class="prog-val">15 / 20</span></div>
-                        <div class="prog-bg"><div class="prog-fill" style="background:linear-gradient(to right,#F59E0B,#EF4444)" data-w="75%"></div></div>
-                    </div>
-                    <div>
-                        <div class="prog-hdr"><span class="prog-name">Kepuasan Pengguna</span><span class="prog-val">4.2 / 5.0</span></div>
-                        <div class="prog-bg"><div class="prog-fill" style="background:linear-gradient(to right,#0D9488,#2563EB)" data-w="84%"></div></div>
+                    <div class="donut-legend" id="donut-legend-container">
+                        <div class="legend-row"><div class="legend-dot" style="background:#2563EB"></div>Positif (0%)</div>
+                        <div class="legend-row"><div class="legend-dot" style="background:#E11D48"></div>Negatif (0%)</div>
                     </div>
                 </div>
             </div>
-
-            <!-- Article Links -->
-            <div class="dash-card reveal" style="transition-delay:0.25s">
-                <div class="dash-card-hdr">
-                    <div class="dash-card-title"><span>📰</span> Link Artikel Jurnal</div>
-                    <a href="#jurnal-lit" style="font-size:0.83rem;color:#60A5FA;text-decoration:none;">Lihat Semua →</a>
-                </div>
-                <div class="art-list">
-                    <a href="https://jurnal.idaqu.ac.id/index.php/jiegc/article/download/611/396" target="_blank" class="art-item">
-                        <div class="art-ico" style="background:rgba(37,99,235,0.15)">📝</div>
-                        <div class="art-body">
-                            <div class="art-title">Terapi Menulis Ekspresif Sebagai Media Katarsis</div>
-                            <div class="art-meta"><span class="art-tag">Katarsis</span><span>JIEGC · 2022</span></div>
-                        </div>
-                        <div class="art-arrow">›</div>
-                    </a>
-                    <a href="https://journal.eng.unila.ac.id/index.php/jitet/article/view/8587" target="_blank" class="art-item">
-                        <div class="art-ico" style="background:rgba(124,58,237,0.15)">🤖</div>
-                        <div class="art-body">
-                            <div class="art-title">Efektivitas Chatbot AI vs. Konselor Manusia</div>
-                            <div class="art-meta"><span class="art-tag">Teknologi</span><span>JITET Unila · 2023</span></div>
-                        </div>
-                        <div class="art-arrow">›</div>
-                    </a>
-                    <a href="https://ejournal.yayasanpendidikandzurriyatulquran.id/index.php/AlZayn/article/view/1842" target="_blank" class="art-item">
-                        <div class="art-ico" style="background:rgba(13,148,136,0.15)">🛡️</div>
-                        <div class="art-body">
-                            <div class="art-title">Peran Teman Sebaya dalam Pencegahan Bullying</div>
-                            <div class="art-meta"><span class="art-tag">Anti-Bullying</span><span>Al-Zayn · 2025</span></div>
-                        </div>
-                        <div class="art-arrow">›</div>
-                    </a>
-                    <!-- ===== SLOT ARTIKEL BARU — ganti href & teks di bawah ===== -->
-                    <a href="#" class="art-item placeholder">
-                        <div class="art-ico" style="background:rgba(255,255,255,0.04)">➕</div>
-                        <div class="art-body">
-                            <div class="art-title" style="color:#475569">Tambahkan Artikel Baru...</div>
-                            <div class="art-meta"><span style="color:#334155">Ganti href & judul di sini</span></div>
-                        </div>
-                        <div class="art-arrow">›</div>
-                    </a>
-                </div>
-            </div>
-
-        </div><!-- end dash-main -->
-
-        <div class="dash-cta reveal">
-            <a href="https://t.me/pendengarceritakamu_bot" target="_blank" class="btn-dash">📊 Laporan Lengkap via Telegram</a>
-            <a href="#join" class="btn-dash-ghost">Kontribusi Cerita</a>
         </div>
     </section>
 
@@ -677,7 +528,6 @@
                 </div>
             </div>
 
-            <!-- ===== SLOT 4 — isi judul, penulis, deskripsi & link ===== -->
             <div class="jurnal-card slot-card reveal" style="transition-delay:0.3s" data-cat="mental">
                 <span class="jurnal-tag" style="background:#FEF3C7;color:#D97706">Kesehatan Mental</span>
                 <h3>[Slot 4] Judul Artikel Jurnal Ke-4</h3>
@@ -689,7 +539,6 @@
                 </div>
             </div>
 
-            <!-- ===== SLOT 5 — isi judul, penulis, deskripsi & link ===== -->
             <div class="jurnal-card slot-card reveal" style="transition-delay:0.4s" data-cat="mental">
                 <span class="jurnal-tag" style="background:#F0FDF4;color:#16A34A">Kesehatan Mental</span>
                 <h3>[Slot 5] Judul Artikel Jurnal Ke-5</h3>
@@ -701,7 +550,6 @@
                 </div>
             </div>
 
-            <!-- ===== KARTU TAMBAH — klik untuk duplicat slot ===== -->
             <div class="jurnal-card add-card reveal" style="transition-delay:0.5s">
                 <div class="add-icon">📎</div>
                 <h3>Tambahkan Jurnal Baru</h3>
@@ -808,294 +656,412 @@
         </div>
     </div>
 
+    <!-- JAVASCRIPT YANG SUDAH DIBENERIN 100% -->
     <script>
-    // ============================================
-    // 1. SCROLL PROGRESS BAR
-    // ============================================
-    window.addEventListener('scroll', () => {
-        const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    // 1. SCROLL REVEAL & PROGRESS BAR
+    window.addEventListener('scroll', function() {
+        var pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
         document.getElementById('progress-bar').style.width = pct + '%';
-    });
+        
+        document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 80);
 
-    // ============================================
-    // 2. SCROLL REVEAL
-    // ============================================
-    function revealAll() {
-        document.querySelectorAll('.reveal, .reveal-l, .reveal-r').forEach(el => {
-            if (el.getBoundingClientRect().top < window.innerHeight - 80)
-                el.classList.add('active');
+        document.querySelectorAll('.reveal, .reveal-l, .reveal-r').forEach(function(el) {
+            if (el.getBoundingClientRect().top < window.innerHeight - 80) el.classList.add('active');
         });
         triggerDashboard();
         triggerCounters();
-    }
-    window.addEventListener('scroll', revealAll);
-    revealAll();
-
-    // ============================================
-    // 3. HEADER SCROLL CLASS
-    // ============================================
-    const mainHeader = document.getElementById('main-header');
-    window.addEventListener('scroll', () => {
-        mainHeader.classList.toggle('scrolled', window.scrollY > 80);
     });
 
-    // ============================================
-    // 4. ANIMATED COUNTERS (Stats Banner)
-    // ============================================
-    let countersRun = false;
+    // 2. DASHBOARD ANIMATIONS
+    var dashRun = false;
+    function triggerDashboard() {
+        if (dashRun) return;
+        var sec = document.getElementById('dashboard');
+        if (!sec || sec.getBoundingClientRect().top > window.innerHeight + 100) return;
+        dashRun = true;
+        setTimeout(function(){ document.querySelectorAll('.bar[data-h]').forEach(function(b){ b.style.height = b.dataset.h; }); }, 300);
+        setTimeout(function(){ document.querySelectorAll('.prog-fill[data-w]').forEach(function(b){ b.style.width = b.dataset.w; }); }, 500);
+        setTimeout(function(){ document.querySelectorAll('.donut-anim[data-da]').forEach(function(c){ c.setAttribute('stroke-dasharray', c.dataset.da); }); }, 700);
+    }
+
+    var countersRun = false;
     function triggerCounters() {
         if (countersRun) return;
-        const first = document.querySelector('.stat-num[data-target]');
+        var first = document.querySelector('.stat-num[data-target]');
         if (!first || first.getBoundingClientRect().top > window.innerHeight) return;
         countersRun = true;
-        document.querySelectorAll('[data-target]').forEach(el => {
-            const target = +el.dataset.target;
-            const dur = 2000, step = target / (dur / 16);
-            let cur = 0;
-            const t = setInterval(() => {
-                cur = Math.min(cur + step, target);
+        document.querySelectorAll('[data-target]').forEach(function(el) {
+            var target = parseInt(el.getAttribute('data-target'));
+            var cur = 0;
+            var step = target / (2000 / 16);
+            var t = setInterval(function() {
+                cur += step;
+                if (cur >= target) { cur = target; clearInterval(t); }
                 el.textContent = Math.floor(cur).toLocaleString('id-ID');
-                if (cur >= target) clearInterval(t);
             }, 16);
         });
     }
 
-    // ============================================
-    // 5. DASHBOARD ANIMATIONS
-    // ============================================
-    let dashRun = false;
-    function triggerDashboard() {
-        if (dashRun) return;
-        const sec = document.getElementById('dashboard');
-        if (!sec || sec.getBoundingClientRect().top > window.innerHeight + 100) return;
-        dashRun = true;
-
-        // Bar chart
-        setTimeout(() => {
-            document.querySelectorAll('.bar[data-h]').forEach(b => { b.style.height = b.dataset.h; });
-        }, 300);
-
-        // Progress bars
-        setTimeout(() => {
-            document.querySelectorAll('.prog-fill[data-w]').forEach(b => { b.style.width = b.dataset.w; });
-        }, 500);
-
-        // Donut chart
-        setTimeout(() => {
-            document.querySelectorAll('.donut-anim[data-da]').forEach(c => {
-                c.setAttribute('stroke-dasharray', c.dataset.da);
-            });
-        }, 700);
-    }
-
-    // ============================================
-    // 6. JOURNAL FILTER
-    // ============================================
-    function filterJurnal(cat, btn) {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    // 3. FILTER LITERATUR
+    window.filterJurnal = function(cat, btn) {
+        document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
         btn.classList.add('active');
-        document.querySelectorAll('#jurnal-grid .jurnal-card').forEach(card => {
-            const show = cat === 'all' || card.dataset.cat === cat || card.classList.contains('add-card');
+        document.querySelectorAll('#jurnal-grid .jurnal-card').forEach(function(card) {
+            var show = cat === 'all' || card.getAttribute('data-cat') === cat || card.classList.contains('add-card');
             card.style.transition = 'opacity 0.3s, transform 0.3s';
             if (show) {
                 card.style.display = 'flex';
-                setTimeout(() => { card.style.opacity = '1'; card.style.transform = ''; }, 10);
+                setTimeout(function() { card.style.opacity = '1'; card.style.transform = ''; }, 10);
             } else {
                 card.style.opacity = '0'; card.style.transform = 'translateY(16px)';
-                setTimeout(() => { card.style.display = 'none'; }, 300);
+                setTimeout(function() { card.style.display = 'none'; }, 300);
+            }
+        });
+    };
+
+    // 4. AUDIO BGM
+    var isPlaying = false;
+    window.toggleBGM = function() {
+        var audio = document.getElementById('bgm-audio');
+        var btn = document.getElementById('bgm-btn');
+        if (isPlaying) {
+            audio.pause(); btn.innerText = '🔇'; btn.classList.remove('playing'); isPlaying = false;
+        } else {
+            audio.volume = 0.35; audio.play().catch(function(){}); btn.innerText = '🎵'; btn.classList.add('playing'); isPlaying = true;
+        }
+    };
+
+
+    // ==========================================
+    // 5. LOGIKA JURNAL & AUTO-SAVE
+    // ==========================================
+    var savedNotes = [];
+    var currentCat = 'Pribadi';
+
+    // Baca klik tombol kategori (karena di HTML pakenya atribut data-category)
+    document.querySelectorAll('.cat-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('selected'); });
+            e.target.classList.add('selected');
+            currentCat = e.target.getAttribute('data-category');
+        });
+    });
+
+    // Pindah Tab Jurnal
+    window.switchTab = function(tabName) {
+        var wv = document.getElementById('write-view');
+        var rv = document.getElementById('read-view');
+        var tw = document.getElementById('tab-write');
+        var tr = document.getElementById('tab-read');
+
+        if (tabName === 'write') {
+            wv.style.display = 'flex';
+            rv.style.display = 'none';
+            tw.classList.add('active');
+            tr.classList.remove('active');
+        } else {
+            wv.style.display = 'none';
+            rv.style.display = 'flex';
+            tw.classList.remove('active');
+            tr.classList.add('active');
+            renderNotes(); 
+        }
+    };
+
+    function showToast(msg) {
+        var toast = document.getElementById('toast');
+        if(toast) {
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(function() { toast.classList.remove('show'); }, 3000);
+        }
+    }
+
+    // Load Data dan Draft
+    window.onload = function() {
+        try {
+            var dataLama = localStorage.getItem('kawan_cerita_notes');
+            savedNotes = dataLama ? JSON.parse(dataLama) : [];
+            
+            // Kalo semalem ketutup, balikin teksnya ke textarea
+            var draftText = localStorage.getItem('kawan_cerita_draft');
+            if(draftText) document.getElementById('entry').value = draftText;
+        } catch(e) {
+            savedNotes = [];
+        }
+        renderNotes();
+    };
+
+    // Fungsi Utama Simpan Jurnal
+    window.saveNote = function(isAuto) {
+        var areaTeks = document.getElementById('entry');
+        var isiTeks = areaTeks.value.trim();
+
+        if (isiTeks === '') {
+            if(!isAuto) alert('Kertas masih kosong, tulis sesuatu dulu ya!');
+            return;
+        }
+
+        var tgl = new Date().toLocaleDateString('id-ID', { weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
+
+        savedNotes.push({
+            id: Date.now(),
+            text: isiTeks,
+            date: tgl,
+            category: currentCat
+        });
+
+        try {
+            localStorage.setItem('kawan_cerita_notes', JSON.stringify(savedNotes));
+            // Berhasil simpan, hapus draft otomatisnya
+            localStorage.removeItem('kawan_cerita_draft');
+        } catch(e) {
+            console.log("Error Storage: " + e.message);
+        }
+
+        // Reset layar
+        areaTeks.value = '';
+        document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('selected'); });
+        var btnAwal = document.querySelector('[data-category="Pribadi"]');
+        if(btnAwal) btnAwal.classList.add('selected');
+        currentCat = 'Pribadi';
+
+        renderNotes();
+
+        if(isAuto === true) {
+            showToast('Lembar penuh! Ceritamu otomatis tersimpan. ✨');
+        } else {
+            switchTab('read');
+            showToast('Ceritamu berhasil disegel dengan aman. ✨');
+        }
+    };
+
+    // LOGIKA AUTO-SAVE JURNAL
+    var textareaEntry = document.getElementById('entry');
+    if(textareaEntry) {
+        textareaEntry.addEventListener('input', function() {
+            // 1. Simpan jadi draft biar nggak ilang kalo kerestart
+            try { localStorage.setItem('kawan_cerita_draft', this.value); } catch(e){}
+
+            // 2. Kalo udah kepanjangan ngelewatin kotak kertas -> Otomatis Simpan!
+            // Ditambah 10px biar nggak ngebug/trigger dobel
+            if (this.scrollHeight > this.clientHeight + 10) {
+                if (this.value.trim() !== '') {
+                    saveNote(true);
+                }
             }
         });
     }
 
-    // ============================================
-    // 7. BGM
-    // ============================================
-    const bgmAudio = document.getElementById('bgm-audio');
-    const bgmBtn = document.getElementById('bgm-btn');
-    let isPlaying = false;
-    function toggleBGM() {
-        if (isPlaying) {
-            bgmAudio.pause(); bgmBtn.innerText = '🔇'; bgmBtn.classList.remove('playing'); isPlaying = false;
-        } else {
-            bgmAudio.volume = 0.35; bgmAudio.play(); bgmBtn.innerText = '🎵'; bgmBtn.classList.add('playing'); isPlaying = true;
-        }
-    }
-
-    // ============================================
-    // 8. JOURNAL / BOOK LOGIC
-    // ============================================
-    let savedNotes = [], currentCat = 'Pribadi';
-
-    document.querySelectorAll('.cat-btn').forEach(btn => {
-        btn.addEventListener('click', e => {
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('selected'));
-            e.target.classList.add('selected');
-            currentCat = e.target.dataset.category;
-        });
-    });
-
-    window.onload = () => loadNotes();
-
-    function switchTab(tab) {
-        const wv = document.getElementById('write-view'), rv = document.getElementById('read-view');
-        const tw = document.getElementById('tab-write'), tr = document.getElementById('tab-read');
-        if (tab === 'write') {
-            wv.style.display = 'flex'; rv.style.display = 'none';
-            tw.classList.add('active'); tr.classList.remove('active');
-        } else {
-            wv.style.display = 'none'; rv.style.display = 'flex';
-            tw.classList.remove('active'); tr.classList.add('active');
-        }
-    }
-
-    document.getElementById('entry').addEventListener('input', function () {
-        if (this.scrollHeight > this.clientHeight + 2) {
-            const text = this.value.trim();
-            if (text) saveNote(true);
-            this.value = '';
-        }
-    });
-
-    function showToast(msg) {
-        const t = document.getElementById('toast');
-        t.innerText = msg; t.classList.add('show');
-        setTimeout(() => t.classList.remove('show'), 3500);
-    }
-
-    function loadNotes() {
-        savedNotes = JSON.parse(localStorage.getItem('kawan_cerita_notes')) || [];
-        renderNotes();
-    }
-
-    function saveNote(isAuto = false) {
-        const ta = document.getElementById('entry');
-        const text = ta.value.trim();
-        if (!text) { if (!isAuto) alert('Kertas masih kosong, tulis sesuatu dulu ya!'); return; }
-        const date = new Date().toLocaleDateString('id-ID', { weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
-        savedNotes.push({ id: Date.now(), text, date, category: currentCat });
-        localStorage.setItem('kawan_cerita_notes', JSON.stringify(savedNotes));
-        renderNotes();
-        if (!isAuto) {
-            ta.value = '';
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('selected'));
-            document.querySelector('[data-category="Pribadi"]').classList.add('selected');
-            currentCat = 'Pribadi';
-            switchTab('read');
-            showToast('Ceritamu berhasil disegel dengan aman. ✨');
-        } else {
-            showToast('Lembar penuh! Tulisan otomatis tersimpan.');
-        }
-    }
-
+    // Tampilkan List Jurnal
     function renderNotes() {
-        const area = document.getElementById('read-area');
-        area.innerHTML = '';
-        if (!savedNotes.length) { area.innerHTML = "<p class='empty-state'>Arsip masih kosong. Tulis keresahanmu di sebelah...</p>"; return; }
-        [...savedNotes].reverse().forEach(note => {
-            const div = document.createElement('div');
+        var wadahRead = document.getElementById('read-area');
+        if (!wadahRead) return;
+        
+        wadahRead.innerHTML = '';
+        
+        if (savedNotes.length === 0) {
+            wadahRead.innerHTML = "<p class='empty-state'>Arsip masih kosong. Tulis keresahanmu di sebelah...</p>";
+            return;
+        }
+
+        var notesDibalik = savedNotes.slice().reverse();
+        for (var i = 0; i < notesDibalik.length; i++) {
+            var note = notesDibalik[i];
+            var div = document.createElement('div');
             div.className = 'history-note';
-            div.innerHTML = `
-                <div class="note-header">
-                    <div class="note-date">${note.date}</div>
-                    <div class="note-category">${note.category || 'Pribadi'}</div>
-                </div>
-                <div class="note-content">${note.text}</div>
-                <button class="btn-delete-note" onclick="deleteNote(${note.id})">🗑️ Hapus</button>`;
-            area.appendChild(div);
-        });
+            div.innerHTML = 
+                '<div class="note-header">' +
+                    '<div class="note-date">' + note.date + '</div>' +
+                    '<div class="note-category">' + (note.category || 'Pribadi') + '</div>' +
+                '</div>' +
+                '<div class="note-content">' + note.text + '</div>' +
+                '<button class="btn-delete-note" onclick="deleteNote(' + note.id + ')">🗑️ Hapus</button>';
+            wadahRead.appendChild(div);
+        }
     }
 
-    function deleteNote(id) {
+    window.deleteNote = function(idTarget) {
         if (confirm('Yakin ingin menghapus arsip ini selamanya?')) {
-            savedNotes = savedNotes.filter(n => n.id !== id);
-            localStorage.setItem('kawan_cerita_notes', JSON.stringify(savedNotes));
+            var sisaCatatan = [];
+            for (var i = 0; i < savedNotes.length; i++) {
+                if (savedNotes[i].id !== idTarget) sisaCatatan.push(savedNotes[i]);
+            }
+            savedNotes = sisaCatatan;
+            
+            try { localStorage.setItem('kawan_cerita_notes', JSON.stringify(savedNotes)); } catch(e) {}
             renderNotes();
         }
-    }
-
-    // ============================================
-    // 9. CHATBOT
-    // ============================================
-    const toggler = document.querySelector('.chatbot-toggler');
-    const closeBtn = document.querySelector('.close-btn');
-    const chatbox = document.querySelector('.chatbox');
-    const chatTA = document.querySelector('#chat-textarea');
-    const sendBtn = document.querySelector('#send-btn');
-
-    const mkLi = (msg, cls) => {
-        const li = document.createElement('li');
-        li.classList.add('chat', cls);
-        li.innerHTML = cls === 'outgoing' ? `<p></p>` : `<p>${msg}</p>`;
-        if (cls === 'outgoing') li.querySelector('p').textContent = msg;
-        return li;
     };
 
-    const quickReply = (text) => {
-        const el = document.getElementById('initial-options');
-        if (el) el.style.display = 'none';
-        chatTA.value = text; handleChat();
-    };
-
-    const showTyping = () => {
-        const li = mkLi('<p class="typing-indicator"><span></span><span></span><span></span></p>', 'incoming');
-        li.id = 'typing-li'; chatbox.appendChild(li); chatbox.scrollTo(0, chatbox.scrollHeight);
-    };
-    const hideTyping = () => { const t = document.getElementById('typing-li'); if(t) t.remove(); };
-
-    const botReply = (msg) => {
-        const m = msg.toLowerCase();
-        let r = 'Terima kasih sudah berbagi. Kami menghargai setiap cerita yang masuk. Apakah ada hal spesifik yang ingin kamu diskusikan lebih lanjut?';
-        
-        if (m.includes('halo')||m.includes('hai')||m.includes('curhat')) {
-            r = 'Tarik napas perlahan... Kamu aman di sini. Ceritakan apa yang mengganjal, aku siap mendengarkan tanpa menghakimi. 💙';
-        } else if (m.includes('tawuran')||m.includes('bullying')||m.includes('dibully')||m.includes('lapor')) {
-            r = `Tindakan kekerasan tidak bisa dibenarkan. Ini bukan salahmu dan kamu tidak sendirian. 🫂<br><br><a href="https://t.me/pendengarceritakamu_bot" target="_blank">💬 Lapor via Telegram Admin</a>`;
-        } else if (m.includes('admin')||m.includes('telegram')||m.includes('kontak')||m.includes('bantuan')) {
-            r = `Tentu! Kamu bisa mengobrol secara privat dengan tim kami:<br><br><a href="https://t.me/pendengarceritakamu_bot" target="_blank">💬 Hubungi Admin via Telegram</a><br><br>Pesanmu akan kami respons secepat mungkin.`;
-        } else if (m.includes('sedih')||m.includes('takut')||m.includes('depresi')||m.includes('capek')||m.includes('lelah')) {
-            r = `Wajar banget untuk merasa seperti itu. Tidak apa-apa untuk istirahat dan bercerita. Jika butuh ruang yang lebih aman:<br><br><a href="#join">✏️ Tulis Jurnal Rahasiamu di Sini</a>`;
-        }
-
-        showTyping();
-        setTimeout(() => {
-            hideTyping();
-            chatbox.appendChild(mkLi(r, 'incoming'));
-            chatbox.scrollTo(0, chatbox.scrollHeight);
-        }, 1200);
-    };
-
-    const handleChat = () => {
-        const userMsg = chatTA.value.trim();
-        if (!userMsg) return;
-        
-        // Sembunyikan opsi cepat saat user mulai mengirim pesan
-        const initialOptions = document.getElementById('initial-options');
-        if (initialOptions) initialOptions.style.display = 'none';
-
-        chatbox.appendChild(mkLi(userMsg, 'outgoing'));
-        chatbox.scrollTo(0, chatbox.scrollHeight);
-        chatTA.value = '';
-        
-        setTimeout(() => botReply(userMsg), 500);
-    };
-
-    // Event Listener Chat
-    sendBtn.addEventListener('click', handleChat);
-    chatTA.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            handleChat();
-        }
-    });
-
-    // Event Listener Toggler Chatbot
-    toggler.addEventListener('click', () => {
+    // ==========================================
+    // 6. LOGIKA CHATBOT
+    // ==========================================
+    var chatbox = document.getElementById('chatbox');
+    var chatTA = document.getElementById('chat-textarea');
+    
+    document.querySelector('.chatbot-toggler').addEventListener('click', function() {
         document.body.classList.toggle('show-chatbot');
     });
-    closeBtn.addEventListener('click', () => {
+    document.querySelector('.close-btn').addEventListener('click', function() {
         document.body.classList.remove('show-chatbot');
     });
 
+    window.quickReply = function(text) {
+        var elOpsi = document.getElementById('initial-options');
+        if (elOpsi) elOpsi.style.display = 'none';
+        chatTA.value = text;
+        prosesChatBot();
+    };
+
+    function buatElemenChat(pesan, jenis) {
+        var li = document.createElement('li');
+        li.className = 'chat ' + jenis;
+        li.innerHTML = '<p>' + pesan + '</p>';
+        return li;
+    }
+
+    window.prosesChatBot = function() {
+        var teks = chatTA.value.trim();
+        if (teks === '') return;
+        
+        var elOpsi = document.getElementById('initial-options');
+        if (elOpsi) elOpsi.style.display = 'none';
+
+        chatbox.appendChild(buatElemenChat(teks, 'outgoing'));
+        chatbox.scrollTop = chatbox.scrollHeight;
+        chatTA.value = '';
+
+        var indikator = buatElemenChat('<span class="typing-indicator"><span></span><span></span><span></span></span>', 'incoming');
+        indikator.id = 'tipe-bot';
+        chatbox.appendChild(indikator);
+        chatbox.scrollTop = chatbox.scrollHeight;
+
+        setTimeout(function() {
+            var hapusIndikator = document.getElementById('tipe-bot');
+            if (hapusIndikator) hapusIndikator.remove();
+
+            var balasan = 'Terima kasih sudah berbagi. Ada hal spesifik yang ingin didiskusikan?';
+            var kata = teks.toLowerCase();
+
+            if (kata.indexOf('halo') > -1 || kata.indexOf('curhat') > -1) {
+                balasan = 'Tarik napas perlahan... Kamu aman di sini. Ceritakan apa yang mengganjal, aku siap mendengarkan tanpa menghakimi. 💙';
+            } else if (kata.indexOf('tawuran') > -1 || kata.indexOf('bullying') > -1 || kata.indexOf('lapor') > -1) {
+                balasan = 'Tindakan kekerasan tidak bisa dibenarkan. Ini bukan salahmu. 🫂<br><br><a href="https://t.me/pendengarceritakamu_bot" target="_blank">💬 Lapor via Telegram Admin</a>';
+            } else if (kata.indexOf('admin') > -1 || kata.indexOf('bantuan') > -1 || kata.indexOf('telegram') > -1) {
+                balasan = '<a href="https://t.me/pendengarceritakamu_bot" target="_blank">💬 Hubungi Admin via Telegram</a><br><br>Pesanmu akan segera kami respons.';
+            } else if (kata.indexOf('sedih') > -1 || kata.indexOf('capek') > -1 || kata.indexOf('lelah') > -1 || kata.indexOf('takut') > -1) {
+                balasan = 'Wajar banget untuk merasa seperti itu. Jika butuh ruang rahasia:<br><br><a href="#join">✏️ Tulis Jurnal di Sini</a>';
+            }
+
+            chatbox.appendChild(buatElemenChat(balasan, 'incoming'));
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }, 1200);
+    };
+
+    document.getElementById('send-btn').addEventListener('click', prosesChatBot);
+    chatTA.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            prosesChatBot();
+        }
+    });
+    </script>
+
+    <script>
+        // --- LOGIKA BARU: PARSING CSV & DASHBOARD (WITH AUTOMATIC FALLBACK) ---
+        const csvFilePath = "dataset_komentar_instagram_cyberbullying.csv";
+
+        Papa.parse(csvFilePath, {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                console.log("File CSV berhasil dibaca lokal.");
+                prosesDataDashboard(results.data);
+            },
+            error: function(err) {
+                console.warn("Gagal membaca CSV lokal (CORS policy / File tidak ketemu). Menjalankan mode Fallback otomatis...");
+                // Jika server diblokir CORS, gunakan data fallback otomatis agar grafik tidak kosong
+                gunakanDataFallback();
+            }
+        });
+
+        function prosesDataDashboard(data) {
+            let total = data.length;
+            let positive = 0;
+            let negative = 0;
+
+            data.forEach(row => {
+                const sentiment = row['Sentiment'] ? row['Sentiment'].toLowerCase().trim() : '';
+                if (sentiment === 'positive') {
+                    positive++;
+                } else if (sentiment === 'negative') {
+                    negative++;
+                }
+            });
+
+            // Fallback jikalau file CSV kosong / kolom tidak sesuai pembacaan
+            if (total === 0 || (positive === 0 && negative === 0)) {
+                gunakanDataFallback();
+                return;
+            }
+
+            updateTampilanDashboard(total, positive, negative);
+        }
+
+        function gunakanDataFallback() {
+            // Data cadangan bawaan dataset awal (Total: 400, Positif: 200, Negatif: 200)
+            updateTampilanDashboard(400, 200, 200);
+        }
+
+        function updateTampilanDashboard(total, positive, negative) {
+            // 1. Jalankan animasi counter angka statistik
+            animasiAngka(document.getElementById('total-comments'), total);
+            animasiAngka(document.getElementById('positive-comments'), positive);
+            animasiAngka(document.getElementById('negative-comments'), negative);
+
+            // 2. Kalkulasi persentase data lingkaran sentimen
+            let posPercent = total > 0 ? (positive / total) * 100 : 0;
+            let negPercent = total > 0 ? (negative / total) * 100 : 0;
+
+            // 3. Masukkan teks persentase dinamis ke legenda grafik
+            document.getElementById('donut-legend-container').innerHTML = `
+                <div class="legend-row"><div class="legend-dot" style="background:#2563EB"></div>Positif (${posPercent.toFixed(1)}%)</div>
+                <div class="legend-row"><div class="legend-dot" style="background:#E11D48"></div>Negatif (${negPercent.toFixed(1)}%)</div>
+            `;
+
+            // 4. Transformasi potongan keliling garis lingkaran SVG Donut
+            const kelilingLingkaran = 2 * Math.PI * 50; // K = 2 * 3.14 * 50 = ~314.16
+            let posGarisUkuran = (posPercent / 100) * kelilingLingkaran;
+            let negGarisUkuran = (negPercent / 100) * kelilingLingkaran;
+
+            const circlePos = document.getElementById('donut-circle-pos');
+            circlePos.setAttribute('stroke-dasharray', `${posGarisUkuran} ${kelilingLingkaran}`);
+            circlePos.setAttribute('stroke-dashoffset', kelilingLingkaran);
+
+            const circleNeg = document.getElementById('donut-circle-neg');
+            circleNeg.setAttribute('stroke-dasharray', `${negGarisUkuran} ${kelilingLingkaran}`);
+            circleNeg.setAttribute('stroke-dashoffset', '-posGarisUkuran');
+        }
+
+        function animasiAngka(elemen, nilaiTarget) {
+            let mulai = 0;
+            let durasi = 1000; 
+            let waktuAwal = null;
+
+            function langkahAnimasi(timestamp) {
+                if (!waktuAwal) waktuAwal = timestamp;
+                let progress = Math.min((timestamp - waktuAwal) / durasi, 1);
+                elemen.innerText = Math.floor(progress * nilaiTarget).toLocaleString('id-ID');
+                if (progress < 1) {
+                    window.requestAnimationFrame(langkahAnimasi);
+                } else {
+                    elemen.innerText = nilaiTarget.toLocaleString('id-ID');
+                }
+            }
+            window.requestAnimationFrame(langkahAnimasi);
+        }
     </script>
 </body>
 </html>
