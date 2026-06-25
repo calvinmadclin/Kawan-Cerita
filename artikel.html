@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memutus Rantai Kekerasan: Menilik Kompleksitas Bullying dan Tawuran di Indonesia</title>
+    <title>Darurat Ruang Aman: Mengapa Senyum Anak Indonesia Mulai Pudar oleh Kekerasan?</title>
     
-    <!-- Memuat Library Chart.js untuk Grafik -->
+    <!-- Memuat Library Chart.js dan Plugin Datalabels -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Memuat Plugin Datalabels untuk menampilkan angka/persentase di grafik -->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
 
     <style>
-        /* Reset & Base Styles */
+        /* Desain Tipografi Modern */
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@400;600;700&display=swap');
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -19,368 +20,302 @@
         }
         
         body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Open Sans', sans-serif;
             line-height: 1.8;
             color: #2c3e50;
-            background-color: #f4f7f6;
-            padding: 40px 20px;
+            background-color: #f0f2f5;
+            padding: 0;
+        }
+
+        /* Navigasi / Header Atas */
+        .top-nav {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            padding: 16px 20px;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
         }
 
         /* Container Artikel */
         article {
-            max-width: 800px;
-            margin: 0 auto;
+            max-width: 740px;
+            margin: 50px auto;
             background: #ffffff;
-            padding: 40px;
+            padding: 60px 50px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.04);
         }
 
-        /* Header Style */
+        /* Header Artikel */
         header {
-            margin-bottom: 35px;
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 20px;
+            margin-bottom: 40px;
+            text-align: center;
         }
 
         h1 {
-            font-size: 2.2rem;
-            color: #1e293b;
-            line-height: 1.3;
-            margin-bottom: 15px;
+            font-family: 'Merriweather', serif;
+            font-size: 2.5rem;
+            color: #111827;
+            line-height: 1.35;
+            margin-bottom: 25px;
             font-weight: 700;
         }
 
         .meta-info {
             font-size: 0.9rem;
-            color: #64748b;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-top: 1px solid #f3f4f6;
+            border-bottom: 1px solid #f3f4f6;
+            padding: 15px 0;
         }
 
-        /* Tipografi Konten */
+        /* Teks Paragraf */
         p {
-            margin-bottom: 22px;
-            font-size: 1.1rem;
+            font-family: 'Merriweather', serif;
+            margin-bottom: 25px;
+            font-size: 1.15rem;
+            color: #374151;
+            line-height: 1.9;
             text-align: justify;
         }
 
+        /* Subheading Buatan untuk Memecah Teks agar Rapi */
         h2 {
+            font-family: 'Open Sans', sans-serif;
             font-size: 1.5rem;
-            color: #0f172a;
-            margin: 40px 0 18px 0;
-            padding-left: 12px;
-            border-left: 4px solid #e11d48;
+            color: #111827;
+            margin: 45px 0 20px 0;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 10px;
         }
 
-        /* Desain List / Poin */
-        ul {
-            margin-bottom: 25px;
-            padding-left: 20px;
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background-color: #e11d48;
         }
 
-        li {
-            margin-bottom: 12px;
-            font-size: 1.05rem;
-            list-style-type: square;
-            color: #334155;
-        }
-
-        li strong {
-            color: #0f172a;
-        }
-
-        /* Desain Tabel Statistik */
-        .table-container {
-            overflow-x: auto;
-            margin: 30px 0;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 1rem;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f1f5f9;
-            color: #1e293b;
-            padding: 14px 16px;
-            font-weight: 600;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        td {
-            padding: 14px 16px;
-            border-bottom: 1px solid #f1f5f9;
-            color: #334155;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f8fafc;
-        }
-
-        /* Blok Sorotan / Insight */
-        .insight-box {
-            background-color: #fff1f2;
-            border-left: 4px solid #f43f5e;
-            padding: 20px;
-            margin: 35px 0;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .insight-box p {
-            margin-bottom: 0;
+        /* Blok Sorotan (Quote) */
+        blockquote {
             font-style: italic;
-            font-size: 1.05rem;
+            font-size: 1.25rem;
             color: #9f1239;
+            border-left: 4px solid #e11d48;
+            margin: 35px 0;
+            padding: 20px 25px;
+            background: #fff1f2;
+            border-radius: 0 8px 8px 0;
+            line-height: 1.7;
         }
 
-        /* === GAYA UNTUK DASHBOARD GRAFIK === */
+        /* === GAYA DASHBOARD GRAFIK KEKINIAN === */
+        .infografis-section {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            padding: 40px 30px;
+            margin: 50px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .infografis-title {
+            text-align: center;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
         .dashboard-container { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 20px; 
-            margin: 40px 0; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 40px; 
         }
         
         .card { 
             background: #ffffff; 
-            padding: 20px; 
-            border-radius: 10px; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.08); 
-            border: 1px solid #e2e8f0;
-        }
-        
-        .card h3 { 
-            font-size: 1.1rem; 
-            color: #475569; 
-            text-align: center; 
-            margin-bottom: 15px; 
-            font-weight: 600;
+            padding: 10px; 
         }
 
-        /* Responsif untuk Layar HP */
-        @media (max-width: 640px) {
-            body {
-                padding: 15px 10px;
-            }
+        /* Responsif */
+        @media (max-width: 768px) {
             article {
-                padding: 20px;
+                margin: 20px 10px;
+                padding: 40px 25px;
             }
             h1 {
-                font-size: 1.65rem;
+                font-size: 2.1rem;
             }
-            h2 {
-                font-size: 1.3rem;
+            p {
+                font-size: 1.05rem;
             }
-            .dashboard-container {
-                grid-template-columns: 1fr;
+            .infografis-section {
+                padding: 30px 15px;
             }
         }
     </style>
 </head>
 <body>
 
+    <div class="top-nav">
+        Jurnal Sosial & Data Terkini
+    </div>
+
     <article>
         <header>
-            <h1>Memutus Rantai Kekerasan: Menilik Kompleksitas Bullying dan Tawuran di Indonesia</h1>
+            <h1>Darurat Ruang Aman: Mengapa Senyum Anak Indonesia Mulai Pudar oleh Kekerasan?</h1>
             <div class="meta-info">
-                <span>Kategori: Analisis Sosial</span> &bull; <span>Waktu Baca: 4 Menit</span>
+                Analisis Laporan Terkini &bull; Berbasis Data Resmi 2023-2024
             </div>
         </header>
 
-        <p>Kekerasan masih menjadi bayang-bayang kelam dalam dinamika sosial di Indonesia. Meskipun secara kultural dikenal sebagai masyarakat yang menjunjung tinggi nilai gotong royong, realitas di lapangan menunjukkan eskalasi agresi yang mengkhawatirkan, terutama di kalangan usia muda. Fenomena ini tidak bisa lagi dipandang sebagai kenakalan remaja biasa, melainkan sebuah krisis perilaku yang tercermin kuat dalam bentuk <em>bullying</em> (perundungan) dan tawuran.</p>
+        <p>Indonesia sering dikenal sebagai negara yang ramah. Budaya saling menyapa, gotong royong, dan menghargai sesama menjadi identitas yang dibanggakan. Namun, di balik citra tersebut, ada kenyataan yang tidak bisa lagi diabaikan. Banyak anak Indonesia justru mengalami kekerasan di tempat yang seharusnya menjadi ruang paling aman bagi mereka, seperti rumah dan sekolah.</p>
 
-        <p>Urgensi krisis ini terekam jelas dalam angka. Berdasarkan data Pusat Informasi Kriminal Nasional (Pusiknas) Bareskrim Polri, jumlah korban kekerasan terhadap anak terus melonjak tajam dari tahun ke tahun. Tren ini membuktikan bahwa normalisasi kekerasan sedang terjadi secara masif di tengah masyarakat.</p>
+        <p>Permasalahan ini bukan sekadar isu yang dibesar-besarkan, melainkan kondisi nyata yang tercermin dari berbagai data resmi sepanjang tahun 2023 hingga awal 2024. Data tersebut menunjukkan bahwa kekerasan terhadap anak masih menjadi persoalan serius yang membutuhkan perhatian dari seluruh pihak.</p>
 
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Tahun Pengamatan</th>
-                        <th>Jumlah Korban Kekerasan Anak</th>
-                        <th>Persentase Kenaikan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>2023</strong> (Jan–Nov)</td>
-                        <td>10.617 orang</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2024</strong> (Jan–Nov)</td>
-                        <td>12.216 orang</td>
-                        <td>Naik 15% dari 2023</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2025</strong> (Jan–Nov)</td>
-                        <td>14.512 orang</td>
-                        <td>Naik 18,7% dari 2024</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <h2>Realitas di Balik Angka</h2>
 
-        <!-- ================= DASHBOARD GRAFIK DIMULAI DI SINI ================= -->
-        <div class="dashboard-container">
-            <!-- Grafik 1: Tren Kekerasan Anak -->
-            <div class="card">
-                <h3>Tren Korban Kekerasan Anak</h3>
-                <canvas id="chartTrenKekerasan"></canvas>
-            </div>
+        <p>Berdasarkan Sistem Informasi Online Perlindungan Perempuan dan Anak (SIMFONI PPA) Kementerian Pemberdayaan Perempuan dan Perlindungan Anak, sepanjang tahun 2023 tercatat lebih dari 28.000 kasus kekerasan di Indonesia. Dari jumlah tersebut, lebih dari 18.000 korban merupakan anak-anak di bawah umur.</p>
 
-            <!-- Grafik 2: Bullying di Sekolah -->
-            <div class="card">
-                <h3>Lonjakan Kasus Bullying di Sekolah</h3>
-                <canvas id="chartBullyingSekolah"></canvas>
-            </div>
+        <p>Jenis kekerasan yang paling banyak dialami adalah kekerasan seksual, yang mencapai lebih dari 45% dari seluruh kasus pada kelompok rentan. Selain itu, masih banyak anak yang menjadi korban kekerasan fisik maupun kekerasan psikis.</p>
+        
+        <blockquote>
+            Angka-angka tersebut bukan sekadar statistik, melainkan menggambarkan ribuan anak yang kehilangan rasa aman, kebahagiaan, bahkan kesempatan untuk tumbuh dan berkembang secara optimal.
+        </blockquote>
 
-            <!-- Grafik 3: Demografi Korban -->
-            <div class="card">
-                <h3>Demografi Korban (Berdasarkan Jenjang)</h3>
-                <canvas id="chartDemografi"></canvas>
+        <!-- ================= BAGIAN INFOGRAFIS ================= -->
+        <div class="infografis-section">
+            <div class="infografis-title">Peta Krisis Ruang Aman Anak</div>
+            <div class="dashboard-container">
+                <!-- Grafik 1: Proporsi Korban Anak -->
+                <div class="card">
+                    <canvas id="chartProporsiKorban"></canvas>
+                </div>
+
+                <!-- Grafik 2: Potensi Kekerasan di Sekolah -->
+                <div class="card">
+                    <canvas id="chartAncamanSekolah"></canvas>
+                </div>
             </div>
         </div>
-        <!-- ================= DASHBOARD GRAFIK SELESAI ================= -->
+        <!-- ================= ================= ================= -->
 
-        <h2>Akar Permasalahan: Dinamika Kelompok dan Pencarian Identitas</h2>
-        <p>Secara psikologis dan sosiologis, kekerasan sosial yang berujung pada tingginya angka korban ini jarang muncul dari ruang hampa. Gesekan kerap dipicu oleh beberapa mekanisme dasar:</p>
-        <ul>
-            <li><strong>Konflik Realistis Kelompok:</strong> Persaingan atas status dan dominasi memicu polarisasi antara "kelompok kita" (<em>in-group</em>) dan "kelompok mereka" (<em>out-group</em>).</li>
-            <li><strong>Krisis Identitas:</strong> Saat lingkungan tidak menyediakan ruang aktualisasi diri yang positif, agresi sering dijadikan alat instan untuk membuktikan eksistensi dan superioritas diri.</li>
-            <li><strong>Normalisasi Kekerasan:</strong> Paparan tindakan kasar yang berulang mendesensitisasi empati, membuat agresi dianggap sebagai cara penyelesaian masalah yang wajar.</li>
-        </ul>
+        <h2>Lingkungan Terdekat yang Tak Lagi Aman</h2>
 
-        <h2>Bullying: Luka Tak Kasat Mata di Usia Dini</h2>
-        <p>Lingkungan yang seharusnya menjadi ruang aman untuk belajar kini kerap berubah menjadi medan intimidasi. Catatan Komisi Perlindungan Anak Indonesia (KPAI) dan Jaringan Pemantau Pendidikan Indonesia (JPPI) menunjukkan bahwa kasus <em>bullying</em> di sekolah meningkat lebih dari dua kali lipat, dari 285 kasus pada 2023 menjadi 573 kasus pada 2024.</p>
-        
-        <p>Fakta yang paling meresahkan adalah pergeseran demografi korban. Agresivitas ini ternyata mulai mengakar sejak usia sangat dini. Korban <em>bullying</em> tertinggi tidak didominasi oleh remaja tingkat atas, melainkan siswa jenjang Sekolah Dasar (26%) dan Sekolah Menengah Pertama (25%), melampaui jenjang SMA/SMK (18,75%).</p>
-        
-        <p>Dampak dari perundungan ini sangat destruktif dan mematikan. KPAI melaporkan tingginya tingkat keputusasaan akibat <em>bullying</em>, di mana sepertiga dari total kasus anak mengakhiri hidup sepanjang tahun 2025 dipicu langsung oleh situasi yang menekan di lingkungan pendidikan. Bagi pelaku, perilaku manipulatif dan minim empati ini berpotensi terbawa hingga masa dewasa jika tidak diintervensi sejak dini.</p>
+        <p>Ironisnya, tempat yang selama ini dianggap paling aman justru menjadi lokasi terjadinya banyak kasus kekerasan. Data dari Komisi Perlindungan Anak Indonesia (KPAI) menunjukkan bahwa dari lebih dari 3.000 pengaduan yang diterima pada periode yang sama, sebagian besar berasal dari Klaster Lingkungan Keluarga dan Klaster Pendidikan. Hal ini menunjukkan bahwa rumah dan sekolah belum sepenuhnya mampu menjadi ruang yang melindungi anak.</p>
 
-        <h2>Tawuran Pelajar: Ilusi Solidaritas yang Merenggut Nyawa</h2>
-        <p>Bibit agresivitas yang tidak ditangani di tingkat SD dan SMP tereskalasi menjadi bentuk kekerasan komunal yang lebih masif di usia remaja madya, yakni tawuran. Fenomena ini sering didorong oleh warisan permusuhan antar-institusi yang dijaga sebagai bentuk kebanggaan semu.</p>
-        
-        <p>Pada tingkat yang lebih ekstrem, tawuran berujung pada fatalitas. Menjelang akhir 2025, eskalasi kekerasan fisik yang melibatkan pelajar memakan korban jiwa dengan sangat cepat, mencatatkan 6 kasus kematian hanya dalam kurun waktu dua bulan.</p>
-        
-        <p>Kondisi fatal ini didorong oleh dua mekanisme psikologis utama:</p>
-        <ul>
-            <li><strong>Konformitas Sosial:</strong> Pelajar sering ikut tawuran akibat tekanan untuk mematuhi norma kelompok agar tidak dianggap lemah atau dikucilkan.</li>
-            <li><strong>Deindividuasi:</strong> Saat berada dalam kerumunan, kesadaran rasional personal melebur. Menurunnya rasa tanggung jawab moral individu ini membuat mereka berani melakukan kekerasan fisik yang ekstrem dan mematikan.</li>
-        </ul>
+        <p>Di lingkungan sekolah, berbagai bentuk kekerasan seperti perundungan (<em>bullying</em>), pengeroyokan, hingga tawuran masih sering terjadi. Kondisi tersebut membuat sebagian siswa merasa cemas saat berada di sekolah. Kekhawatiran ini juga diperkuat oleh hasil Asesmen Nasional (Rapor Pendidikan) dari Kemendikbudristek. Data menunjukkan bahwa sekitar 34,51% siswa di Indonesia atau setara dengan satu dari tiga anak memiliki risiko tinggi mengalami kekerasan seksual di lingkungan sekolah. Selain itu, sekitar 26,9% siswa masih berada dalam situasi yang berisiko mengalami hukuman fisik.</p>
 
-        <div class="insight-box">
-            <p><strong>Analisis Situasi:</strong> Tingginya angka kekerasan di tingkat pendidikan dasar merupakan indikator krusial. Jika intervensi perilaku menyimpang tidak ditangani sejak dini, pola agresi tersebut akan terakumulasi menjadi aksi kekerasan komunal yang jauh lebih destruktif saat anak memasuki usia remaja.</p>
-        </div>
+        <h2>Memutus Siklus Normalisasi</h2>
 
-        <h2>Pendekatan Solutif: Intervensi dan Aksi Sosial</h2>
-        <p>Menyelesaikan masalah struktural ini tidak bisa bersandar pada pendekatan hukum atau sanksi semata. Diperlukan intervensi sosial dan psikologis yang terukur untuk memutus rantai kekerasan ini:</p>
-        <ul>
-            <li><strong>Pendidikan Karakter dan Regulasi Emosi:</strong> Mengintegrasikan pendekatan kognitif yang melatih kecerdasan emosional, resolusi konflik, dan kemampuan melihat perspektif orang lain secara objektif.</li>
-            <li><strong>Program Kreativitas dan Pemberdayaan:</strong> Merancang aksi sosial yang menyatukan kaum muda dari berbagai latar belakang untuk bekerja sama. Tujuannya adalah meruntuhkan sekat <em>in-group</em> dan <em>out-group</em> secara alami.</li>
-            <li><strong>Dukungan Pertolongan Pertama Psikologis:</strong> Menyediakan ruang konseling dan intervensi krisis yang mudah diakses guna menyembuhkan trauma korban, sekaligus merekonstruksi pola pikir para pelaku.</li>
-        </ul>
+        <p>Tingginya angka kekerasan terhadap anak menunjukkan bahwa persoalan ini tidak bisa lagi dianggap sebagai kejadian yang bersifat individual. Salah satu penyebabnya adalah masih adanya anggapan bahwa ejekan, bentakan, atau hukuman fisik merupakan hal yang wajar sebagai candaan maupun bentuk kedisiplinan. Padahal, pembiaran terhadap perilaku tersebut dapat membuat kekerasan terus berulang dan perlahan mengikis rasa empati dalam lingkungan sekitar.</p>
 
-        <p>Kekerasan di kalangan muda adalah mata rantai yang bisa diputus. Pemahaman yang komprehensif terhadap dinamika psikologis dan data di lapangan adalah pijakan awal yang esensial untuk membangun lingkungan sosial yang lebih suportif dan rasional.</p>
+        <p>Oleh karena itu, upaya penanganan tidak boleh hanya dilakukan ketika suatu kasus menjadi viral. Yang lebih penting adalah membangun sistem pencegahan yang kuat, mulai dari menciptakan lingkungan sekolah yang aman, memperkuat pengawasan di dalam keluarga, menegakkan hukum secara tegas terhadap pelaku kekerasan, hingga meningkatkan kepedulian masyarakat untuk berani melapor ketika melihat tanda-tanda kekerasan.</p>
+
+        <p>Pada akhirnya, setiap anak berhak tumbuh di lingkungan yang memberikan rasa aman, perlindungan, dan kesempatan untuk berkembang tanpa rasa takut. Sudah saatnya semua pihak bersama-sama memastikan bahwa masa kecil anak Indonesia tidak dipenuhi luka, melainkan menjadi masa yang penuh dengan rasa aman, kebahagiaan, dan harapan.</p>
+
     </article>
 
     <!-- Script Konfigurasi Grafik Chart.js -->
     <script>
-        // Mendaftarkan plugin DataLabels agar angka muncul di grafik
         Chart.register(ChartDataLabels);
 
-        // Konfigurasi Grafik 1: Tren Kekerasan Anak (Bar Chart)
-        const ctx1 = document.getElementById('chartTrenKekerasan').getContext('2d');
+        // Grafik 1: Doughnut Chart - Proporsi Korban Anak
+        const ctx1 = document.getElementById('chartProporsiKorban').getContext('2d');
         new Chart(ctx1, {
-            type: 'bar',
-            data: {
-                labels: ['2023', '2024', '2025'],
-                datasets: [{
-                    label: 'Jumlah Korban',
-                    data: [10617, 12216, 14512],
-                    backgroundColor: ['#3498db', '#e67e22', '#e74c3c'],
-                    borderRadius: 5
-                }]
-            },
-            options: { 
-                responsive: true, 
-                plugins: { 
-                    legend: { display: false },
-                    datalabels: {
-                        color: '#fff',
-                        anchor: 'end',
-                        align: 'bottom',
-                        offset: -25,
-                        font: { weight: 'bold', size: 12 },
-                        formatter: function(value) {
-                            return value.toLocaleString('id-ID'); // Format angka ribuan
-                        }
-                    }
-                } 
-            }
-        });
-
-        // Konfigurasi Grafik 2: Lonjakan Kasus Bullying di Sekolah (Line Chart)
-        const ctx2 = document.getElementById('chartBullyingSekolah').getContext('2d');
-        new Chart(ctx2, {
-            type: 'line',
-            data: {
-                labels: ['2023', '2024', '2025'], // Ditambahkan 2025
-                datasets: [{
-                    label: 'Jumlah Kasus di Sekolah',
-                    data: [285, 573, 812], // Ditambahkan data proyeksi 2025 (812 kasus)
-                    borderColor: '#9b59b6',
-                    backgroundColor: 'rgba(155, 89, 182, 0.2)',
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.3,
-                    pointRadius: 6
-                }]
-            },
-            options: { 
-                responsive: true, 
-                plugins: { 
-                    legend: { display: false },
-                    datalabels: {
-                        color: '#8e44ad',
-                        align: 'top',
-                        font: { weight: 'bold', size: 12 }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: false
-                    }
-                }
-            }
-        });
-
-        // Konfigurasi Grafik 3: Demografi Korban Bullying (Doughnut Chart)
-        const ctx3 = document.getElementById('chartDemografi').getContext('2d');
-        new Chart(ctx3, {
             type: 'doughnut',
             data: {
-                labels: ['SD', 'SMP', 'SMA/SMK', 'Lainnya'],
+                labels: ['Anak-anak', 'Dewasa'],
                 datasets: [{
-                    data: [26, 25, 18.75, 30.25],
-                    backgroundColor: ['#2ecc71', '#f1c40f', '#e74c3c', '#95a5a6'],
-                    borderWidth: 1
+                    // Menggunakan data dari artikel: 18.000 anak dari 28.000 total (sisa 10.000)
+                    data: [18000, 10000], 
+                    backgroundColor: ['#e11d48', '#1f2937'],
+                    borderWidth: 0,
+                    hoverOffset: 8
                 }]
             },
             options: { 
                 responsive: true,
+                layout: { padding: 10 },
                 plugins: {
+                    title: {
+                        display: true,
+                        text: 'Proporsi Korban Kekerasan',
+                        font: { family: 'Open Sans', size: 14, weight: 'bold' },
+                        padding: { bottom: 20 }
+                    },
+                    legend: { position: 'bottom', labels: { padding: 20, font: { family: 'Open Sans' } } },
                     datalabels: {
-                        color: '#fff',
-                        font: { weight: 'bold', size: 14 },
+                        color: '#ffffff',
+                        font: { weight: 'bold', size: 14, family: 'Open Sans' },
                         formatter: function(value, context) {
-                            return value + '%'; // Menambahkan simbol persentase
+                            let total = context.chart._metasets[context.datasetIndex].total;
+                            let percentage = Math.round((value / total) * 100) + "%";
+                            return percentage;
                         }
                     }
                 }
+            }
+        });
+
+        // Grafik 2: Bar Chart - Risiko di Lingkungan Sekolah
+        const ctx2 = document.getElementById('chartAncamanSekolah').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Risiko Keks. Seksual', 'Risiko Hukuman Fisik'],
+                datasets: [{
+                    label: 'Persentase Risiko Siswa (%)',
+                    data: [34.51, 26.9],
+                    backgroundColor: ['#3b82f6', '#f59e0b'],
+                    borderRadius: 6
+                }]
+            },
+            options: { 
+                responsive: true, 
+                scales: {
+                    y: { 
+                        beginAtZero: true, 
+                        max: 50,
+                        grid: { borderDash: [5, 5], color: '#e5e7eb' },
+                        ticks: { font: { family: 'Open Sans' } }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { family: 'Open Sans', weight: '600' } }
+                    }
+                },
+                plugins: { 
+                    title: {
+                        display: true,
+                        text: 'Risiko di Sekolah (Nasional)',
+                        font: { family: 'Open Sans', size: 14, weight: 'bold' },
+                        padding: { bottom: 20 }
+                    },
+                    legend: { display: false },
+                    datalabels: {
+                        color: '#111827',
+                        anchor: 'end',
+                        align: 'top',
+                        font: { weight: 'bold', size: 13, family: 'Open Sans' },
+                        formatter: function(value) {
+                            return value + "%"; 
+                        }
+                    }
+                } 
             }
         });
     </script>
