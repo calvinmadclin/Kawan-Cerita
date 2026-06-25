@@ -78,15 +78,6 @@
         .scroll-hint::after { content: ''; width: 1px; height: 36px; background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent); }
         @keyframes hint-fade { 0%,100%{opacity:0.4;transform:translateX(-50%) translateY(0);} 50%{opacity:0.9;transform:translateX(-50%) translateY(-6px);} }
 
-        /* =========================================
-           3. STATS BANNER
-        ========================================= */
-        .stats-banner { background: #fff; padding: 0; border-bottom: 1px solid #E2E8F0; }
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); max-width: 1140px; margin: auto; padding: 0 24px; }
-        .stat-item { text-align: center; padding: 32px 20px; border-right: 1px solid #E2E8F0; }
-        .stat-item:last-child { border-right: none; }
-        .stat-num { font-size: 2.4rem; font-weight: 700; background: linear-gradient(135deg, var(--blue), var(--purple)); -webkit-background-clip: text; background-clip: text; color: transparent; display: block; line-height: 1; }
-        .stat-lbl { font-size: 0.85rem; color: var(--muted); margin-top: 6px; font-weight: 500; }
 
         /* =========================================
            4. TEAM SECTION
@@ -128,81 +119,6 @@
         .feat-icon { font-size: 2.4rem; margin-bottom: 18px; display: block; }
         .feature-card h3 { font-size: 1.15rem; color: var(--text); margin-bottom: 10px; font-weight: 600; }
         .feature-card p { color: var(--muted); line-height: 1.8; font-size: 0.95rem; }
-
-        /* ==========================================
-           7. DASHBOARD SECTION (NEW)
-        ========================================== */
-        .dashboard-section { padding: 100px 24px; background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #1E293B 100%); position: relative; overflow: hidden; }
-        .dashboard-section::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 20% 30%, rgba(37,99,235,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(124,58,237,0.08) 0%, transparent 50%); pointer-events: none; }
-        .dashboard-section .sec-badge { background: rgba(37,99,235,0.2); color: #93C5FD; }
-        .dashboard-section .sec-title { color: #F8FAFC; }
-        .dashboard-section .sec-sub { color: #94A3B8; margin-bottom: 50px; }
-        .dash-center { text-align: center; }
-
-        /* Stat cards */
-        .dash-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; max-width: 1100px; margin: 0 auto 40px; }
-        .dash-stat { background: rgba(255,255,255,0.06); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 26px 20px; text-align: center; transition: all 0.4s; position: relative; overflow: hidden; }
-        .dash-stat::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04), transparent 70%); opacity: 0; transition: opacity 0.4s; }
-        .dash-stat:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-6px); }
-        .dash-stat:hover::after { opacity: 1; }
-        .ds-icon { font-size: 1.9rem; margin-bottom: 14px; display: block; }
-        .ds-num { font-size: 2.6rem; font-weight: 700; background: linear-gradient(135deg, #60A5FA, #A78BFA); -webkit-background-clip: text; background-clip: text; color: transparent; display: block; line-height: 1; }
-        .ds-label { font-size: 0.85rem; color: #94A3B8; margin-top: 7px; }
-        .ds-change { font-size: 0.78rem; color: #34D399; margin-top: 6px; font-weight: 500; }
-
-        /* Dashboard main 2-col grid */
-        .dash-main { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 1100px; margin: 0 auto 36px; }
-        .dash-card { background: rgba(255,255,255,0.06); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 28px; transition: border-color 0.3s; }
-        .dash-card:hover { border-color: rgba(255,255,255,0.18); }
-        .dash-card.full { grid-column: 1 / -1; }
-        .dash-card-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.07); }
-        .dash-card-title { font-size: 1rem; font-weight: 600; color: #E2E8F0; display: flex; align-items: center; gap: 9px; }
-        .dc-badge { background: rgba(37,99,235,0.25); color: #93C5FD; padding: 3px 11px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; }
-
-        /* Bar chart */
-        .bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 150px; padding: 8px 0; }
-        .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 7px; height: 100%; justify-content: flex-end; }
-        .bar { width: 100%; border-radius: 6px 6px 0 0; height: 0; transition: height 1.4s cubic-bezier(0.16,1,0.3,1); background: linear-gradient(to top, var(--blue), var(--purple)); cursor: default; }
-        .bar:hover { filter: brightness(1.3); }
-        .bar-val { font-size: 0.72rem; color: #94A3B8; font-weight: 600; }
-        .bar-lbl { font-size: 0.72rem; color: #475569; }
-
-        /* Donut chart */
-        .donut-wrap { display: flex; align-items: center; gap: 22px; }
-        .donut-svg { width: 130px; height: 130px; flex-shrink: 0; transform: rotate(-90deg); overflow: visible; }
-        .donut-anim { transition: stroke-dasharray 1.6s cubic-bezier(0.16,1,0.3,1); }
-        .donut-legend { display: flex; flex-direction: column; gap: 10px; flex: 1; }
-        .legend-row { display: flex; align-items: center; gap: 9px; font-size: 0.86rem; color: #94A3B8; }
-        .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-
-        /* Progress bars */
-        .prog-list { display: flex; flex-direction: column; gap: 16px; }
-        .prog-hdr { display: flex; justify-content: space-between; margin-bottom: 7px; font-size: 0.87rem; }
-        .prog-name { color: #CBD5E1; font-weight: 500; }
-        .prog-val { color: #64748B; }
-        .prog-bg { height: 8px; background: rgba(255,255,255,0.07); border-radius: 10px; overflow: hidden; }
-        .prog-fill { height: 100%; border-radius: 10px; width: 0; transition: width 1.6s cubic-bezier(0.16,1,0.3,1); }
-
-        /* Article links in dashboard */
-        .art-list { display: flex; flex-direction: column; gap: 10px; }
-        .art-item { display: flex; gap: 12px; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); transition: all 0.3s; align-items: center; text-decoration: none; }
-        .art-item:hover { background: rgba(255,255,255,0.09); border-color: rgba(37,99,235,0.4); transform: translateX(5px); }
-        .art-ico { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
-        .art-body { flex: 1; min-width: 0; }
-        .art-title { font-size: 0.87rem; font-weight: 600; color: #E2E8F0; margin-bottom: 4px; line-height: 1.35; }
-        .art-meta { display: flex; gap: 8px; align-items: center; font-size: 0.78rem; color: #475569; }
-        .art-tag { background: rgba(37,99,235,0.2); color: #93C5FD; padding: 2px 8px; border-radius: 6px; }
-        .art-arrow { color: #475569; font-size: 1.1rem; flex-shrink: 0; transition: all 0.3s; }
-        .art-item:hover .art-arrow { color: #93C5FD; transform: translateX(4px); }
-        .art-item.placeholder { opacity: 0.45; border-style: dashed; }
-        .art-item.placeholder:hover { opacity: 0.7; border-color: rgba(255,255,255,0.2); transform: none; }
-
-        /* Dashboard CTA */
-        .dash-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; max-width: 1100px; margin: 0 auto; }
-        .btn-dash { background: linear-gradient(135deg, var(--blue), var(--purple)); color: #fff; padding: 12px 28px; border-radius: 30px; font-weight: 600; font-size: 0.92rem; transition: all 0.4s; box-shadow: 0 4px 15px rgba(37,99,235,0.3); display: inline-block; }
-        .btn-dash:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(37,99,235,0.5); }
-        .btn-dash-ghost { background: transparent; color: #94A3B8; padding: 12px 28px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.14); font-weight: 500; transition: all 0.4s; display: inline-block; font-size: 0.92rem; }
-        .btn-dash-ghost:hover { border-color: rgba(255,255,255,0.35); color: #E2E8F0; }
 
         /* =========================================
            8. LITERATUR SECTION
@@ -378,9 +294,8 @@
                 <li><a href="#home">Beranda</a></li>
                 <li><a href="#team">Tim</a></li>
                 <li><a href="#about">Tentang</a></li>
-                <li><a href="#dashboard">Dashboard</a></li>
                 <li><a href="#jurnal-lit">Literatur</a></li>
-                <li><a href="#join">Jurnal</a></li>
+                <li><a href="#join">Jurnaling</a></li>
             </ul>
         </div>
     </header>
@@ -447,38 +362,6 @@
             <div class="feature-card reveal" style="transition-delay:0.3s"><span class="feat-icon">🎓</span><h3>Edukasi & Webinar</h3><p>Akses materi eksklusif seputar kesehatan mental dan webinar interaktif dari para ahli.</p></div>
         </div>
     </section>
-
-    <!-- ======== DASHBOARD (NEW) ======== -->
-    <section id="dashboard" class="dashboard-section">
-        <div class="dash-center">
-            <div class="sec-badge">Data & Wawasan</div>
-            <h2 class="sec-title">Dashboard Analisis Komentar</h2>
-        </div>
-        
-        <div class="dash-stats">
-            <div class="dash-stat"><span class="ds-icon">📊</span><span class="ds-num counter" id="total-comments">0</span><div class="ds-label">Total Komentar</div></div>
-            <div class="dash-stat"><span class="ds-icon">✅</span><span class="ds-num counter" id="positive-comments">0</span><div class="ds-label">Sentimen Positif</div></div>
-            <div class="dash-stat"><span class="ds-icon">❌</span><span class="ds-num counter" id="negative-comments">0</span><div class="ds-label">Sentimen Negatif</div></div>
-        </div>
-
-        <div class="dash-main">
-            <div class="dash-card full">
-                <div class="dash-card-hdr"><div class="dash-card-title"><span>🍩</span> Distribusi Sentimen</div></div>
-                <div class="donut-wrap">
-                    <svg class="donut-svg" viewBox="0 0 120 120">
-                        <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(0,0,0,0.05)" stroke-width="13"/>
-                        <circle id="donut-circle-pos" class="donut-anim" cx="60" cy="60" r="50" fill="none" stroke="#2563EB" stroke-width="13" stroke-linecap="round" stroke-dasharray="0 314" stroke-dashoffset="314"/>
-                        <circle id="donut-circle-neg" class="donut-anim" cx="60" cy="60" r="50" fill="none" stroke="#E11D48" stroke-width="13" stroke-linecap="round" stroke-dasharray="0 314" stroke-dashoffset="314"/>
-                    </svg>
-                    <div class="donut-legend" id="donut-legend-container">
-                        <div class="legend-row"><div class="legend-dot" style="background:#2563EB"></div>Positif (0%)</div>
-                        <div class="legend-row"><div class="legend-dot" style="background:#E11D48"></div>Negatif (0%)</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- ======== LITERATUR ======== -->
     <section id="jurnal-lit" class="jurnal-lit-section section-scroll">
         <div style="text-align:center">
@@ -529,14 +412,13 @@
             </div>
 
             <div class="jurnal-card slot-card reveal" style="transition-delay:0.3s" data-cat="mental">
-                <span class="jurnal-tag" style="background:#FEF3C7;color:#D97706">Teknologi</span>
-                <h3>Analisis Sentimen Cyberbullying pada Komentar Instagram dengan Metode
-Klasifikasi Support Vector Machine</h3>
-                <p class="jurnal-author">Jurnal Pengembangan Teknologi Informasi dan Ilmu Komputer - Universitas Brawijaya (2018)</p>
-                <p class="jurnal-desc">Sumber Scrapping Data dari Komentar Instagram Sejumlah 400 komentar</p>
+                <span class="jurnal-tag" style="background:#FEF3C7;color:#D97706">Anti-Bullying</span>
+                <h3>Memutus Rantai Kekerasan: Menilik Kompleksitas Bullying dan Tawuran di Indonesia</h3>
+                <p class="jurnal-author">Calvin et al. (2026)</p>
+                <p class="jurnal-desc">Artikel dengan Data di dalamnya</p>
                 <div class="jurnal-footer">
                     <span class="jurnal-meta">📅 2018 · Peer-reviewed</span>
-                    <a href="miawwww.html" target="_blank" class="btn-baca">Baca Jurnal</a>
+                    <a href="artikel.html" target="_blank" class="btn-baca">Baca Jurnal</a>
                 </div>
             </div>
 
@@ -950,102 +832,6 @@ Klasifikasi Support Vector Machine</h3>
             prosesChatBot();
         }
     });
-    </script>
-
-    <script>
-        // --- LOGIKA BARU: PARSING CSV & DASHBOARD (WITH AUTOMATIC FALLBACK) ---
-        const csvFilePath = "dataset_komentar_instagram_cyberbullying.csv";
-
-        Papa.parse(csvFilePath, {
-            download: true,
-            header: true,
-            skipEmptyLines: true,
-            complete: function(results) {
-                console.log("File CSV berhasil dibaca lokal.");
-                prosesDataDashboard(results.data);
-            },
-            error: function(err) {
-                console.warn("Gagal membaca CSV lokal (CORS policy / File tidak ketemu). Menjalankan mode Fallback otomatis...");
-                // Jika server diblokir CORS, gunakan data fallback otomatis agar grafik tidak kosong
-                gunakanDataFallback();
-            }
-        });
-
-        function prosesDataDashboard(data) {
-            let total = data.length;
-            let positive = 0;
-            let negative = 0;
-
-            data.forEach(row => {
-                const sentiment = row['Sentiment'] ? row['Sentiment'].toLowerCase().trim() : '';
-                if (sentiment === 'positive') {
-                    positive++;
-                } else if (sentiment === 'negative') {
-                    negative++;
-                }
-            });
-
-            // Fallback jikalau file CSV kosong / kolom tidak sesuai pembacaan
-            if (total === 0 || (positive === 0 && negative === 0)) {
-                gunakanDataFallback();
-                return;
-            }
-
-            updateTampilanDashboard(total, positive, negative);
-        }
-
-        function gunakanDataFallback() {
-            // Data cadangan bawaan dataset awal (Total: 400, Positif: 200, Negatif: 200)
-            updateTampilanDashboard(400, 200, 200);
-        }
-
-        function updateTampilanDashboard(total, positive, negative) {
-            // 1. Jalankan animasi counter angka statistik
-            animasiAngka(document.getElementById('total-comments'), total);
-            animasiAngka(document.getElementById('positive-comments'), positive);
-            animasiAngka(document.getElementById('negative-comments'), negative);
-
-            // 2. Kalkulasi persentase data lingkaran sentimen
-            let posPercent = total > 0 ? (positive / total) * 100 : 0;
-            let negPercent = total > 0 ? (negative / total) * 100 : 0;
-
-            // 3. Masukkan teks persentase dinamis ke legenda grafik
-            document.getElementById('donut-legend-container').innerHTML = `
-                <div class="legend-row"><div class="legend-dot" style="background:#2563EB"></div>Positif (${posPercent.toFixed(1)}%)</div>
-                <div class="legend-row"><div class="legend-dot" style="background:#E11D48"></div>Negatif (${negPercent.toFixed(1)}%)</div>
-            `;
-
-            // 4. Transformasi potongan keliling garis lingkaran SVG Donut
-            const kelilingLingkaran = 2 * Math.PI * 50; // K = 2 * 3.14 * 50 = ~314.16
-            let posGarisUkuran = (posPercent / 100) * kelilingLingkaran;
-            let negGarisUkuran = (negPercent / 100) * kelilingLingkaran;
-
-            const circlePos = document.getElementById('donut-circle-pos');
-            circlePos.setAttribute('stroke-dasharray', `${posGarisUkuran} ${kelilingLingkaran}`);
-            circlePos.setAttribute('stroke-dashoffset', kelilingLingkaran);
-
-            const circleNeg = document.getElementById('donut-circle-neg');
-            circleNeg.setAttribute('stroke-dasharray', `${negGarisUkuran} ${kelilingLingkaran}`);
-            circleNeg.setAttribute('stroke-dashoffset', '-posGarisUkuran');
-        }
-
-        function animasiAngka(elemen, nilaiTarget) {
-            let mulai = 0;
-            let durasi = 1000; 
-            let waktuAwal = null;
-
-            function langkahAnimasi(timestamp) {
-                if (!waktuAwal) waktuAwal = timestamp;
-                let progress = Math.min((timestamp - waktuAwal) / durasi, 1);
-                elemen.innerText = Math.floor(progress * nilaiTarget).toLocaleString('id-ID');
-                if (progress < 1) {
-                    window.requestAnimationFrame(langkahAnimasi);
-                } else {
-                    elemen.innerText = nilaiTarget.toLocaleString('id-ID');
-                }
-            }
-            window.requestAnimationFrame(langkahAnimasi);
-        }
     </script>
 </body>
 </html>
