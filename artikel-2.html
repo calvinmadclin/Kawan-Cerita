@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cyberbullying Indonesia: Artikel & Dashboard Data</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #0f1117;
+      color: #f1f1f1;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background-color: #161b27;
+      border-bottom: 1px solid #2a2f3e;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+
+    header .badge {
+      font-size: 11px;
+      color: #aaa;
+      background: #1e2535;
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    /* ── TABS ── */
+    .tabs {
+      display: flex;
+      background-color: #161b27;
+      border-bottom: 1px solid #2a2f3e;
+      padding: 0 32px;
+      gap: 4px;
+    }
+
+    .tab-btn {
+      padding: 14px 24px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #666;
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+    }
+
+    .tab-btn:hover { color: #bbb; }
+
+    .tab-btn.active {
+      color: #e63946;
+      border-bottom-color: #e63946;
+    }
+
+    /* ── TAB PANELS ── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ════════════════════════════════
+       ARTIKEL
+    ════════════════════════════════ */
+    .article-hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 64px 24px;
+      text-align: center;
+      border-bottom: 1px solid #2a2f3e;
+    }
+
+    .article-hero .tag {
+      display: inline-block;
+      background-color: #e63946;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    .article-hero h2 {
+      font-size: clamp(22px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.3;
+      max-width: 760px;
+      margin: 0 auto 16px;
+      color: #fff;
+    }
+
+    .article-hero .subtitle {
+      font-size: 16px;
+      color: #8899bb;
+      max-width: 580px;
+      margin: 0 auto;
+      font-style: italic;
+    }
+
+    .article-meta {
+      text-align: center;
+      background-color: #161b27;
+      padding: 12px;
+      font-size: 12px;
+      color: #555;
+      border-bottom: 1px solid #2a2f3e;
+    }
+
+    .article-body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+
+    .article-body .lead {
+      font-size: 19px;
+      color: #bbb;
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+      border-bottom: 2px solid #e63946;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    .article-body p {
+      font-size: 16px;
+      color: #ccc;
+      line-height: 1.85;
+      margin-bottom: 20px;
+    }
+
+    .article-body h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin: 40px 0 14px;
+      padding-left: 14px;
+      border-left: 4px solid #e63946;
+      line-height: 1.3;
+    }
+
+    .article-body blockquote {
+      border-left: 4px solid #e63946;
+      background-color: #161b27;
+      padding: 18px 22px;
+      margin: 28px 0;
+      font-size: 16px;
+      font-style: italic;
+      color: #aaa;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .article-body em {
+      font-style: italic;
+      color: #f77f00;
+      font-weight: 600;
+    }
+
+    /* Inline stat highlight */
+    .inline-stat {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: #161b27;
+      border: 1px solid #2a2f3e;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 28px 0;
+    }
+
+    .inline-stat .big-num {
+      font-size: 44px;
+      font-weight: 800;
+      color: #e63946;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .inline-stat .desc {
+      font-size: 14px;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    /* Tips box */
+    .tips-box {
+      background: #161b27;
+      border: 1px solid #2a2f3e;
+      border-radius: 10px;
+      padding: 28px;
+      margin: 32px 0;
+    }
+
+    .tips-box h4 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .tips-box ul { list-style: none; }
+
+    .tips-box ul li {
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid #2a2f3e;
+      font-size: 15px;
+      color: #bbb;
+      align-items: flex-start;
+      line-height: 1.6;
+    }
+
+    .tips-box ul li:last-child { border-bottom: none; }
+    .tips-box ul li .icon { font-size: 20px; flex-shrink: 0; }
+    .tips-box ul li strong { color: #fff; }
+
+    /* Closing */
+    .article-closing {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border: 1px solid #2a2f3e;
+      padding: 30px 28px;
+      border-radius: 10px;
+      margin-top: 40px;
+      font-size: 16px;
+      line-height: 1.85;
+      color: #aaa;
+      font-style: italic;
+    }
+
+    /* ════════════════════════════════
+       DASHBOARD
+    ════════════════════════════════ */
+    .dashboard {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #555;
+      margin-bottom: 14px;
+      margin-top: 36px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .kpi-card {
+      background: #161b27;
+      border: 1px solid #2a2f3e;
+      border-radius: 12px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+
+    .kpi-card.red::before    { background: #e63946; }
+    .kpi-card.blue::before   { background: #4361ee; }
+    .kpi-card.orange::before { background: #f77f00; }
+    .kpi-card.green::before  { background: #06d6a0; }
+
+    .kpi-label {
+      font-size: 12px;
+      color: #777;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .kpi-value {
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .kpi-card.red    .kpi-value { color: #e63946; }
+    .kpi-card.blue   .kpi-value { color: #4361ee; }
+    .kpi-card.orange .kpi-value { color: #f77f00; }
+    .kpi-card.green  .kpi-value { color: #06d6a0; }
+
+    .kpi-source { font-size: 11px; color: #444; }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .chart-card {
+      background: #161b27;
+      border: 1px solid #2a2f3e;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .chart-card.full { grid-column: 1 / -1; }
+
+    .chart-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #ddd;
+      margin-bottom: 4px;
+    }
+
+    .chart-subtitle {
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .chart-wrapper { position: relative; height: 240px; }
+
+    .progress-list { display: flex; flex-direction: column; gap: 16px; }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+
+    .progress-label { color: #bbb; }
+    .progress-value { font-weight: 700; color: #fff; }
+
+    .progress-bar-bg {
+      background: #2a2f3e;
+      border-radius: 4px;
+      height: 8px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+    }
+
+    .ranking-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      padding: 16px 0;
+    }
+
+    .rank-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 6px solid #e63946;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .rank-number {
+      font-size: 36px;
+      font-weight: 800;
+      color: #e63946;
+      line-height: 1;
+    }
+
+    .rank-label { font-size: 11px; color: #888; text-align: center; }
+
+    .rank-desc p {
+      font-size: 14px;
+      color: #aaa;
+      line-height: 1.75;
+    }
+
+    .rank-desc strong { color: #e63946; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 11px;
+      color: #444;
+      border-top: 1px solid #2a2f3e;
+      margin-top: 20px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .tabs { padding: 0 16px; overflow-x: auto; }
+      .tab-btn { padding: 14px 16px; white-space: nowrap; }
+      .charts-grid { grid-template-columns: 1fr; }
+      .chart-card.full { grid-column: 1; }
+      .ranking-box { flex-direction: column; gap: 20px; }
+      header { padding: 16px; }
+      header h1 { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <h1>Cyberbullying Indonesia</h1>
+  <span class="badge">Artikel + Dashboard Data</span>
+</header>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('artikel', this)">📄 Artikel</button>
+  <button class="tab-btn" onclick="switchTab('dashboard', this)">📊 Dashboard Data</button>
+</div>
+
+<!-- ════ PANEL: ARTIKEL ════ -->
+<div id="panel-artikel" class="tab-panel active">
+
+  <div class="article-hero">
+    <span class="tag">Isu Digital</span>
+    <h2>Ketika Layar Menjadi Senjata: Mengapa Cyberbullying Harus Kita Hadapi Bersama</h2>
+    <p class="subtitle">Perundungan kini tidak butuh tatap muka. Cukup dari balik layar, siapa pun bisa menjadi korban.</p>
+  </div>
+
+  <div class="article-meta">
+    Diterbitkan · 2026 &nbsp;|&nbsp; Kategori: Anti Bullying &nbsp;|&nbsp; Waktu baca: ±4 menit
+  </div>
+
+  <div class="article-body">
+    <p class="lead">
+      Pernahkah kamu menerima komentar jahat di media sosial, atau menyaksikan seseorang dihina ramai-ramai di kolom komentar Instagram? Jika iya, kamu baru saja menyaksikan, atau bahkan mengalami, cyberbullying.
+    </p>
+
+    <p>Di era serba digital ini, perundungan tidak lagi butuh tatap muka. Cukup dari balik layar, seseorang bisa melukai orang lain kapan saja dan di mana saja.</p>
+
+    <h3>Angka yang Seharusnya Mengkhawatirkan Kita</h3>
+
+    <p>Masalah ini bukan sekadar isu pinggiran. UNICEF mencatat bahwa sebanyak 45 persen remaja Indonesia usia 14–24 tahun pernah mengalami cyberbullying dalam berbagai bentuknya, mulai dari pelecehan lewat aplikasi chatting, penyebaran foto atau video tanpa izin, hingga bentuk perundungan daring lainnya.</p>
+
+    <p>Di sisi yang lebih muda, kondisinya tak kalah memprihatinkan. Survei Nasional Pengalaman Hidup Anak dan Remaja (SNPHAR) tahun 2024 menunjukkan bahwa sekitar 14,49 persen anak laki-laki dan 13,78 persen anak perempuan usia 13–17 tahun pernah mengalami cyberbullying.</p>
+
+    <p>Kasusnya pun terus melonjak. Laporan SAFEnet pada triwulan pertama 2024 mencatat kasus perundungan siber meningkat lebih dari 100 persen dibandingkan tahun sebelumnya, menjadi 480 kasus, lonjakan yang tidak lepas dari penggunaan media sosial yang masif di kalangan pelajar.</p>
+
+    <h3>Apa Saja Bentuknya?</h3>
+
+    <p>Banyak orang mengira cyberbullying hanya soal hinaan di kolom komentar. Nyatanya, bentuknya jauh lebih beragam. Di antaranya ada <em>doxing</em> (membongkar data pribadi seseorang tanpa izin), <em>trolling</em> (komentar yang sengaja memprovokasi atau menyakiti), <em>sextortion</em> (pemerasan menggunakan konten intim), <em>online mobbing</em> (perundungan massal di media sosial), hingga penyebaran konten intim tanpa persetujuan korban.</p>
+
+    <blockquote>Semua bentuk itu punya satu kesamaan: menyerang harga diri dan rasa aman korbannya.</blockquote>
+
+    <h3>Instagram: Ladang Subur Perundungan Digital</h3>
+
+    <p>Platform yang identik dengan foto estetis dan konten inspiratif ini ternyata juga menjadi salah satu arena cyberbullying paling aktif. Penggunaan Instagram di kalangan Generasi Z telah mencapai 51,90 persen, dan kasus cyberbullying di platform ini menyumbang hingga 42 persen dari total kasus di seluruh media sosial, dengan dampak yang meluas pada kesehatan mental korban, termasuk kecemasan, depresi, hingga pikiran untuk menyakiti diri sendiri.</p>
+
+    <h3>Luka yang Tidak Tampak di Permukaan</h3>
+
+    <p>Cyberbullying bukan sekadar "lebay" atau baper. Dampaknya sangat nyata: trauma psikologis, kecemasan berkepanjangan, depresi, bahkan risiko bunuh diri.</p>
+
+    <div class="inline-stat">
+      <span class="big-num">31,8%</span>
+      <span class="desc">korban memilih diam dan mengabaikan pengalaman cyberbullying yang mereka alami. Hanya <strong style="color:#fff;">6,7%</strong> yang berani melaporkannya kepada pihak berwenang.</span>
+    </div>
+
+    <p>Artinya, banyak korban yang menanggung beban itu sendirian, dalam diam.</p>
+
+    <h3>Mengapa Ini Terus Terjadi?</h3>
+
+    <p>Salah satu faktor besarnya adalah rendahnya literasi digital masyarakat kita. Menurut Digital Civility Index dari Microsoft, Indonesia menempati urutan ke-29 dari 32 negara yang disurvei, sebuah cerminan bahwa adab digital kita masih perlu banyak diperbaiki. Faktor lain yang memperparah adalah anonimitas di media sosial, yang membuat pelaku merasa bebas tanpa konsekuensi.</p>
+
+    <h3>Apa yang Bisa Kita Lakukan?</h3>
+
+    <p>Masalah ini tidak bisa diselesaikan oleh satu pihak saja. Dibutuhkan kerja sama semua pihak: edukasi masyarakat tentang bentuk-bentuk cyberbullying dan dampaknya perlu terus ditingkatkan, agar siapa pun, baik korban maupun saksi, tahu harus berbuat apa.</p>
+
+    <div class="tips-box">
+      <h4>Langkah Kecil yang Bisa Dimulai Sekarang</h4>
+      <ul>
+        <li>
+          <span class="icon">💭</span>
+          <span><strong>Berpikir sebelum mengetik.</strong> Kalau tidak berani mengatakannya langsung ke wajah seseorang, mungkin itu bukan hal yang perlu ditulis.</span>
+        </li>
+        <li>
+          <span class="icon">🙋</span>
+          <span><strong>Jangan jadi penonton pasif.</strong> Melaporkan konten berbahaya atau menghubungi korban untuk memberi dukungan adalah tindakan yang nyata.</span>
+        </li>
+        <li>
+          <span class="icon">📱</span>
+          <span><strong>Simpan bukti dan laporkan.</strong> Tangkapan layar bisa menjadi bukti kuat jika kamu atau orang terdekat menjadi korban.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="article-closing">
+      Dunia digital seharusnya menjadi ruang yang setara dan aman bagi semua orang. Tapi keamanan itu tidak datang sendiri, ia dibangun dari pilihan-pilihan kecil yang kita buat setiap hari: bagaimana kita berkomentar, apa yang kita bagikan, dan bagaimana kita memperlakukan orang lain, meski hanya di balik layar.
+    </div>
+  </div>
+</div>
+
+<!-- ════ PANEL: DASHBOARD ════ -->
+<div id="panel-dashboard" class="tab-panel">
+  <div class="dashboard">
+
+    <p class="section-title" style="margin-top:8px;">Indikator Utama</p>
+    <div class="kpi-grid">
+      <div class="kpi-card red">
+        <p class="kpi-label">Remaja 14–24 tahun pernah mengalami cyberbullying</p>
+        <p class="kpi-value">45%</p>
+        <p class="kpi-source">UNICEF Indonesia</p>
+      </div>
+      <div class="kpi-card blue">
+        <p class="kpi-label">Kasus perundungan siber Q1 2024</p>
+        <p class="kpi-value">480</p>
+        <p class="kpi-source">SAFEnet · naik 100%+ dari 2023</p>
+      </div>
+      <div class="kpi-card orange">
+        <p class="kpi-label">Kasus cyberbullying terjadi di Instagram</p>
+        <p class="kpi-value">42%</p>
+        <p class="kpi-source">Dari total kasus di media sosial</p>
+      </div>
+      <div class="kpi-card green">
+        <p class="kpi-label">Korban yang berani melapor ke pihak berwenang</p>
+        <p class="kpi-value">6,7%</p>
+        <p class="kpi-source">Studi nasional · data 2024</p>
+      </div>
+    </div>
+
+    <p class="section-title">Visualisasi Data</p>
+    <div class="charts-grid">
+
+      <div class="chart-card">
+        <p class="chart-title">Respons Korban Cyberbullying</p>
+        <p class="chart-subtitle">Apa yang dilakukan setelah mengalami perundungan?</p>
+        <div class="chart-wrapper">
+          <canvas id="chartRespons"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <p class="chart-title">Korban Berdasarkan Jenis Kelamin</p>
+        <p class="chart-subtitle">Anak usia 13–17 tahun (SNPHAR 2024)</p>
+        <div class="chart-wrapper">
+          <canvas id="chartGender"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <p class="chart-title">Distribusi Kasus per Platform</p>
+        <p class="chart-subtitle">Instagram vs platform media sosial lainnya</p>
+        <div class="chart-wrapper">
+          <canvas id="chartPlatform"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <p class="chart-title">Tren Kasus Perundungan Siber</p>
+        <p class="chart-subtitle">Perbandingan Q1 2023 vs Q1 2024 (SAFEnet)</p>
+        <div class="chart-wrapper">
+          <canvas id="chartTren"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-card full">
+        <p class="chart-title">Dampak Cyberbullying pada Kesehatan Mental Korban</p>
+        <p class="chart-subtitle">Persentase korban yang mengalami gangguan berikut</p>
+        <div class="progress-list" style="margin-top:8px;">
+          <div>
+            <div class="progress-header">
+              <span class="progress-label">Kecemasan (Anxiety)</span>
+              <span class="progress-value">68%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width:68%;background:#e63946;"></div>
+            </div>
+          </div>
+          <div>
+            <div class="progress-header">
+              <span class="progress-label">Depresi</span>
+              <span class="progress-value">54%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width:54%;background:#f77f00;"></div>
+            </div>
+          </div>
+          <div>
+            <div class="progress-header">
+              <span class="progress-label">Rendahnya Rasa Percaya Diri</span>
+              <span class="progress-value">40%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width:40%;background:#4361ee;"></div>
+            </div>
+          </div>
+          <div>
+            <div class="progress-header">
+              <span class="progress-label">Perilaku Anti-Sosial</span>
+              <span class="progress-value">32%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width:32%;background:#9b5de5;"></div>
+            </div>
+          </div>
+          <div>
+            <div class="progress-header">
+              <span class="progress-label">Ideasi Bunuh Diri</span>
+              <span class="progress-value">18%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width:18%;background:#06d6a0;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-card full">
+        <p class="chart-title">Digital Civility Index Indonesia</p>
+        <p class="chart-subtitle">Survei Microsoft · Tingkat adab digital pengguna internet</p>
+        <div class="ranking-box">
+          <div class="rank-circle">
+            <span class="rank-number">29</span>
+            <span class="rank-label">dari 32 negara</span>
+          </div>
+          <div class="rank-desc">
+            <p>Indonesia menempati peringkat <strong>ke-29 dari 32 negara</strong> dalam Digital Civility Index versi Microsoft. Ini mencerminkan bahwa adab digital masyarakat Indonesia masih perlu banyak ditingkatkan. Rendahnya literasi digital dan tingginya anonimitas di media sosial menjadi dua faktor utama yang memperparah angka cyberbullying di Indonesia.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  Data bersumber dari UNICEF, SAFEnet, KemenPPPA, SNPHAR 2024, dan Microsoft Digital Civility Index.
+  Dibuat untuk keperluan edukasi dan kesadaran publik.
+</footer>
+
+<script>
+  // ── TAB SWITCHING ──
+  function switchTab(name, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    btn.classList.add('active');
+
+    if (name === 'dashboard' && !window.chartsBuilt) {
+      buildCharts();
+      window.chartsBuilt = true;
+    }
+  }
+
+  // ── CHARTS ──
+  function buildCharts() {
+    Chart.defaults.color = '#888';
+    Chart.defaults.font.family = 'Segoe UI, Arial, sans-serif';
+
+    const grid = 'rgba(255,255,255,0.06)';
+    const tick = '#555';
+
+    // Respons Korban
+    new Chart(document.getElementById('chartRespons'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Diam / Abaikan', 'Laporkan ke berwenang', 'Respons lainnya'],
+        datasets: [{
+          data: [31.8, 6.7, 61.5],
+          backgroundColor: ['#e63946', '#06d6a0', '#2a2f3e'],
+          borderColor: '#161b27',
+          borderWidth: 3,
+          hoverOffset: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '65%',
+        plugins: {
+          legend: { position: 'bottom', labels: { padding: 14, boxWidth: 12, font: { size: 11 } } },
+          tooltip: { callbacks: { label: c => ` ${c.label}: ${c.parsed}%` } }
+        }
+      }
+    });
+
+    // Gender
+    new Chart(document.getElementById('chartGender'), {
+      type: 'bar',
+      data: {
+        labels: ['Anak Laki-laki', 'Anak Perempuan'],
+        datasets: [{
+          label: '% pernah mengalami cyberbullying',
+          data: [14.49, 13.78],
+          backgroundColor: ['#4361ee', '#e63946'],
+          borderRadius: 6,
+          barThickness: 48
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => ` ${c.parsed.x}%` } }
+        },
+        scales: {
+          x: { grid: { color: grid }, ticks: { color: tick, callback: v => v + '%' }, max: 20 },
+          y: { grid: { display: false }, ticks: { color: '#ccc', font: { size: 13 } } }
+        }
+      }
+    });
+
+    // Platform
+    new Chart(document.getElementById('chartPlatform'), {
+      type: 'pie',
+      data: {
+        labels: ['Instagram', 'Platform Lainnya'],
+        datasets: [{
+          data: [42, 58],
+          backgroundColor: ['#f77f00', '#2a2f3e'],
+          borderColor: '#161b27',
+          borderWidth: 3,
+          hoverOffset: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { padding: 14, boxWidth: 12, font: { size: 12 } } },
+          tooltip: { callbacks: { label: c => ` ${c.label}: ${c.parsed}%` } }
+        }
+      }
+    });
+
+    // Tren
+    new Chart(document.getElementById('chartTren'), {
+      type: 'bar',
+      data: {
+        labels: ['Q1 2023', 'Q1 2024'],
+        datasets: [{
+          label: 'Jumlah Kasus',
+          data: [236, 480],
+          backgroundColor: ['#4361ee', '#e63946'],
+          borderRadius: 6,
+          barThickness: 56
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => ` ${c.parsed.y} kasus` } }
+        },
+        scales: {
+          y: { grid: { color: grid }, ticks: { color: tick }, beginAtZero: true },
+          x: { grid: { display: false }, ticks: { color: '#ccc', font: { size: 13 } } }
+        }
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
